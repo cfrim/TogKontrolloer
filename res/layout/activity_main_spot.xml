@@ -20,11 +20,11 @@
 
     <ImageButton
         android:id="@+id/overview"
-        android:background="@color/MenuColor"
         android:layout_width="101dip"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:background="@color/MenuColor"
         android:src="@drawable/ic_oversigt" />
 
     <ImageButton
@@ -38,24 +38,12 @@
         android:src="@drawable/ic_spot" />
 
     <TextView
-        android:id="@+id/inTrainText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/toggleButton1"
-        android:layout_marginLeft="@dimen/marginLR"
-		android:layout_marginRight="@dimen/marginLR"
-        android:text="In train"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white" />
-
-    <TextView
         android:id="@+id/toStationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/inTrainText"
-        android:layout_below="@+id/trainLinesSpinner"
-        android:layout_marginTop="10dp"
-        android:text="To station:"
+        android:layout_alignLeft="@+id/trainLinesSpinner"
+        android:layout_below="@+id/fromStationsSpinner"
+        android:text="Til station:(Udfyld kun i tog)"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white" />
 
@@ -63,28 +51,18 @@
         android:id="@+id/toStationsSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/marginLR"
-		android:layout_marginRight="@dimen/marginLR"
         android:layout_below="@+id/toStationText"
+        android:layout_marginLeft="@dimen/marginLR"
+        android:layout_marginRight="@dimen/marginLR"
         android:entries="@array/stations_array" />
-
-    <TextView
-        android:id="@+id/fromStationText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-		android:layout_alignLeft="@+id/trainLinesSpinner"
-        android:layout_below="@+id/toStationsSpinner"
-        android:text="From station:"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white" />
 
     <Spinner
         android:id="@+id/fromStationsSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/marginLR"
-		android:layout_marginRight="@dimen/marginLR"
         android:layout_below="@+id/fromStationText"
+        android:layout_marginLeft="@dimen/marginLR"
+        android:layout_marginRight="@dimen/marginLR"
         android:entries="@array/stations_array" />
 
     <TextView
@@ -92,10 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/marginLR"
-		android:layout_marginRight="@dimen/marginLR"
-        android:layout_below="@+id/inTrainText"
+        android:layout_marginRight="@dimen/marginLR"
         android:layout_marginTop="17dp"
-        android:text="Train line:"
+        android:text="Train line:(Udfyld kun i tog)"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white" />
 
@@ -103,19 +80,32 @@
         android:id="@+id/trainLinesSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/marginLR"
-		android:layout_marginRight="@dimen/marginLR"
         android:layout_below="@+id/trainLinesText"
+        android:layout_marginLeft="@dimen/marginLR"
+        android:layout_marginRight="@dimen/marginLR"
         android:entries="@array/trainLines_array" />
 
-    <ToggleButton
-        android:id="@+id/toggleButton1"
+    <Button
+        android:id="@+id/addSpot"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/fromStationsSpinner"
+        android:layout_alignRight="@+id/fromStationsSpinner"
+        android:layout_below="@+id/toStationsSpinner"
+        android:layout_marginTop="10dp"
+        android:background="@color/MenuColor"
+        android:textColor="@color/white"
+        android:text="Spot" />
+
+    <TextView
+        android:id="@+id/fromStationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-		android:layout_marginRight="@dimen/marginLR"
-        android:layout_marginTop="38dp"
-        android:text="ToggleButton" />
+        android:layout_alignLeft="@+id/fromStationsSpinner"
+        android:layout_below="@+id/trainLinesSpinner"
+        android:layout_marginTop="30dp"
+        android:text="Fra station:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white" />
 
 </RelativeLayout>
