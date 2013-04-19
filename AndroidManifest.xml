@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="dk.kea.togkontrolloer.MainSpotActivity"
+            android:name="togkontrolloer.activities.MainSpotActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name="dk.kea.togkontrolloer.FavoriteActivity"
+            android:name="togkontrolloer.activities.FavoriteActivity"
             android:label="@string/title_activity_favorite" >
         </activity>
         <activity
-            android:name="dk.kea.togkontrolloer.OverviewActivity"
+            android:name="togkontrolloer.activities.OverviewActivity"
             android:label="@string/title_activity_overview" >
         </activity>
     </application>

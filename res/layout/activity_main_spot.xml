@@ -71,7 +71,7 @@
         android:id="@+id/fromStationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/trainLinesSpinner"
+		android:layout_alignLeft="@+id/trainLinesSpinner"
         android:layout_below="@+id/toStationsSpinner"
         android:text="From station:"
         android:textAppearance="?android:attr/textAppearanceMedium"

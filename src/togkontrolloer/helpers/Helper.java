@@ -1,4 +1,4 @@
-package dk.kea.togkontrolloer;
+package togkontrolloer.helpers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
