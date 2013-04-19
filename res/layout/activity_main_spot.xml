@@ -1,0 +1,121 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainSpotActivity" >
+
+    <ImageButton
+        android:id="@+id/favorits"
+        android:layout_width="101dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/MenuColor"
+        android:src="@drawable/ic_favoritter" />
+
+    <ImageButton
+        android:id="@+id/overview"
+        android:background="@color/MenuColor"
+        android:layout_width="101dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_oversigt" />
+
+    <ImageButton
+        android:id="@+id/spot"
+        android:layout_width="101dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/overview"
+        android:layout_toRightOf="@+id/favorits"
+        android:background="@color/SelectedColor"
+        android:src="@drawable/ic_spot" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="64dp"
+        android:layout_marginTop="32dp"
+        android:text="ToggleButton" />
+
+    <Spinner
+        android:id="@+id/trainLinesSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="14dp"
+        android:entries="@array/trainLines_array" />
+
+    <Spinner
+        android:id="@+id/toStationsSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/trainLinesSpinner"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/trainLinesSpinner"
+        android:layout_marginTop="45dp"
+        android:entries="@array/stations_array" />
+
+    <Spinner
+        android:id="@+id/fromStationsSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/toStationsSpinner"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/toStationsSpinner"
+        android:layout_marginTop="25dp"
+        android:entries="@array/stations_array" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/inTrainText"
+        android:layout_below="@+id/inTrainText"
+        android:text="Train line:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/inTrainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/toggleButton1"
+        android:layout_toLeftOf="@+id/spot"
+        android:text="In train"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/fromStationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/trainLinesSpinner"
+        android:layout_below="@+id/trainLinesSpinner"
+        android:layout_marginTop="110dp"
+        android:text="From station:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/toStationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/toStationsSpinner"
+        android:layout_alignBottom="@+id/trainLinesSpinner"
+        android:layout_alignLeft="@+id/toStationsSpinner"
+        android:text="To station:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
