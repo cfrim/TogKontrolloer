@@ -37,22 +37,13 @@
         android:background="@color/SelectedColor"
         android:src="@drawable/ic_spot" />
 
-    <ToggleButton
-        android:id="@+id/toggleButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="64dp"
-        android:layout_marginTop="32dp"
-        android:text="ToggleButton" />
-
     <TextView
         android:id="@+id/inTrainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/toggleButton1"
-        android:layout_toLeftOf="@+id/spot"
+        android:layout_marginLeft="@dimen/marginLR"
+		android:layout_marginRight="@dimen/marginLR"
         android:text="In train"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/white" />
@@ -71,7 +62,8 @@
         android:id="@+id/toStationsSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/inTrainText"
+        android:layout_marginLeft="@dimen/marginLR"
+		android:layout_marginRight="@dimen/marginLR"
         android:layout_below="@+id/toStationText"
         android:entries="@array/stations_array" />
 
@@ -89,15 +81,17 @@
         android:id="@+id/fromStationsSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/inTrainText"
+        android:layout_marginLeft="@dimen/marginLR"
+		android:layout_marginRight="@dimen/marginLR"
         android:layout_below="@+id/fromStationText"
         android:entries="@array/stations_array" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/trainLinesText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/inTrainText"
+        android:layout_marginLeft="@dimen/marginLR"
+		android:layout_marginRight="@dimen/marginLR"
         android:layout_below="@+id/inTrainText"
         android:layout_marginTop="17dp"
         android:text="Train line:"
@@ -108,8 +102,19 @@
         android:id="@+id/trainLinesSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/inTrainText"
-        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="@dimen/marginLR"
+		android:layout_marginRight="@dimen/marginLR"
+        android:layout_below="@+id/trainLinesText"
         android:entries="@array/trainLines_array" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+		android:layout_marginRight="@dimen/marginLR"
+        android:layout_marginTop="38dp"
+        android:text="ToggleButton" />
 
 </RelativeLayout>
