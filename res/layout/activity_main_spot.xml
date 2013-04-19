@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/inTrainText"
         android:layout_below="@+id/trainLinesSpinner"
+        android:layout_marginTop="10dp"
         android:text="To station:"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white" />
