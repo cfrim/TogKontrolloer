@@ -29,8 +29,11 @@ public class MathHelp {
 		Date date1 = null;
 		Date date2 = null;
 		try {
-			date1 = format.parse(d1);
-			date2 = format.parse(d2);
+			if(d1 == "now") date1 = new Date();
+			else date1 = format.parse(d1);
+			
+			if(d2 == "now") date2 = new Date(); 
+			else date2 = format.parse(d2);
         } catch (ParseException e) {
             e.printStackTrace();
         }    

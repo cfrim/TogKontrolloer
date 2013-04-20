@@ -1,6 +1,9 @@
 package kea.togkontrolloer.helpers;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,6 +15,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import kea.togkontrolloer.models.*;
 import android.content.Context;
@@ -37,7 +42,25 @@ public class RequestHelp {
 		return isConnected;
 	}
 	
-	public static String makeRequest(String url){
+	public static boolean fileExists(String filename){
+		
+		File file = context.getFileStreamPath(filename);
+		
+		return file.exists();
+		
+	}
+	
+	public static String fileTimestamp(String filename){
+		
+		String file = getLocalJSON(filename);
+		
+		Request request = getRequest(file);
+	
+		return request.getTimestamp();
+		
+	}
+	
+	public static String getServerJSON(String url){
 		
 		String result = "";
 		
@@ -62,10 +85,65 @@ public class RequestHelp {
 		return result;
 		
 	}
+	
+	public static String getLocalJSON(String filename){
+		
+		String result = "";
+		
+		FileInputStream file;
+		try{
+			file = context.openFileInput(filename);
+			StringBuffer fileContent = new StringBuffer("");
+			byte[] buffer = new byte[1024];
+			
+			while(file.read(buffer) != -1){
+				fileContent.append(new String(buffer));
+			}
+			
+			result = fileContent.toString();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+	
+	public static Request getRequest(String jsonRequest){
+		
+		Request request;
+		JSONObject jsonObject;
+		try {
+			jsonObject = new JSONObject(jsonRequest);
+			String out = jsonObject.getString("out");
+			String error = jsonObject.getString("error");
+			String func = jsonObject.getString("func");
+			String timestamp = jsonObject.getString("timestamp");
+			request = new Request(out, error, func, timestamp);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			request = new Request();
+		}
+		
+		return request;
+		
+	}
 
 	public static ArrayList<Station> getStations(){
 		
 		ArrayList<Station> stations = new ArrayList<Station>();
+		
+		if(isConnected()){
+			
+			
+			
+		}
 		
 		return stations;
 		

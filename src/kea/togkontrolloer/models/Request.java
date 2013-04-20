@@ -7,6 +7,10 @@ public class Request {
 	private String func;
 	private String timestamp;
 	
+	public Request(){
+		
+	}
+	
 	public Request(String out, String error, String func, String timestamp) {
 		this.out = out;
 		this.error = error;
