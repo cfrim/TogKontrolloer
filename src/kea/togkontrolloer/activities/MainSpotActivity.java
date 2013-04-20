@@ -1,15 +1,15 @@
-package togkontrolloer.activities;
+package kea.togkontrolloer.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kea.togkontrolloer.helpers.RequestMaker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import togkontrolloer.helpers.RequestMaker;
-
-import dk.kea.togkontrolloer.R;
+import kea.togkontrolloer.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -32,7 +32,7 @@ public class MainSpotActivity extends Activity {
         setContentView(R.layout.activity_main_spot);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
         TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
-        tv.setText("SPOTTING"); 
+        tv.setText("SPOTTING");
         
         ImageButton favoriteBtn = (ImageButton) findViewById(R.id.favorits);
         try{

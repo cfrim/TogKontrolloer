@@ -1,4 +1,4 @@
-package togkontrolloer.models;
+package kea.togkontrolloer.models;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package togkontrolloer.activities;
+package kea.togkontrolloer.activities;
 
-import dk.kea.togkontrolloer.R;
+import kea.togkontrolloer.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;

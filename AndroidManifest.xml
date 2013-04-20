@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dk.kea.togkontrolloer"
+    package="kea.togkontrolloer"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,6 +8,8 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="10" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -15,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="togkontrolloer.activities.MainSpotActivity"
+            android:name="kea.togkontrolloer.activities.MainSpotActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +25,11 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name="togkontrolloer.activities.FavoriteActivity"
+            android:name="kea.togkontrolloer.activities.FavoriteActivity"
             android:label="@string/title_activity_favorite" >
         </activity>
         <activity
-            android:name="togkontrolloer.activities.OverviewActivity"
+            android:name="kea.togkontrolloer.activities.OverviewActivity"
             android:label="@string/title_activity_overview" >
         </activity>
     </application>
