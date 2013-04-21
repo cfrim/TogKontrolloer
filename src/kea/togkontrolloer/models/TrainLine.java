@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class TrainLine {
 
 	private int id;
-	private String name;
+	public String name;
 	private String destination;
 	private String icon;
 	private ArrayList<Station> stations;
@@ -18,6 +18,12 @@ public class TrainLine {
 		this.icon = icon;
 		this.stations = stations;
 		
+	}
+
+	public TrainLine(String name, int id) {
+		
+		this.name = name;
+		this.id = id;
 	}
 	
 	public int getId() {

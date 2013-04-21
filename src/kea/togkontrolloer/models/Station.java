@@ -1,11 +1,11 @@
 package kea.togkontrolloer.models;
 
-public class Station {
+public class Station{
 	
-	private int id;
-	private String name;
-	private double lat;
-	private double lon;
+	public int id;
+	public String name;
+	public double lat;
+	public double lon;
 
 	public Station(int id, String name, double lat, double lon){
 		
