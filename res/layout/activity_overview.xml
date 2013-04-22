@@ -63,7 +63,7 @@
         android:textColor="@color/white"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Tog linjer:"
+        android:text="@string/TogLinjer"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
