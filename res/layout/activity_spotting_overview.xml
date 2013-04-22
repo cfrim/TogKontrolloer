@@ -41,11 +41,11 @@
         android:src="@drawable/ic_spot" />
 
     <ListView
-        android:id="@+id/trainlinesOverview"
+        android:id="@+id/spottingOverview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/favorits"
-        android:layout_below="@+id/headerOverview"
+        android:layout_below="@+id/backBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/marginLR"
         android:layout_marginRight="@dimen/marginLR"
@@ -57,13 +57,20 @@
         android:id="@+id/headerOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="@dimen/marginLR"
-        android:layout_marginRight="@dimen/marginLR"
-        android:textColor="@color/white"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Tog linjer:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/backBtn"
+        android:text="Tog stationer:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white" />
+
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spottingOverview"
+        android:layout_alignTop="@+id/headerOverview"
+        android:background="@color/bgColor"
+        android:src="@drawable/ic_back" />
 
 </RelativeLayout>

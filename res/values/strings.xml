@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TogKontrollør</string>
+    <string name="app_name"></string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
@@ -12,21 +12,27 @@
     <string name="title_activity_favorite">TogKontrollør - Favoritter</string>
     <string name="favorite">Welcome to favorites</string>
     <string name="title_activity_overview">TogKontrollør - Oversigt</string>
+
     <color name="white">#FFFFFF</color>
     <color name="bgTitleColor">#4A4E56</color>
+
     <string name="title_activity_spotting">SPOTTING</string>
-    
+
     <string-array name="trainLines_array">
         <item>C Klampenborg</item>
         <item>F Ballerup</item>
         <item>E Hellerød</item>
     </string-array>
-    
     <string-array name="stations_array">
         <item>Klampenborg</item>
         <item>Ordrup</item>
         <item>Charlottenlund</item>
         <item>Hellerup</item>
     </string-array>
+
+    <string name="title_activity_specific_line_overview">SpecificLineOverviewActivity</string>
+    <string name="img_favorits">favoritter knap</string>
+    <string name="img_spot">Spot knap</string>
+    <string name="img_overview">Oversigt knap</string>
 
 </resources>
