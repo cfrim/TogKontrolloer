@@ -17,6 +17,7 @@
 
     <ImageButton
         android:id="@+id/favorits"
+        android:contentDescription="@string/img_favorits"
         android:layout_width="101dip"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -26,6 +27,7 @@
 
     <ImageButton
         android:id="@+id/overview"
+        android:contentDescription="@string/img_overview"
         android:layout_width="101dip"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -35,6 +37,7 @@
 
     <ImageButton
         android:id="@+id/spot"
+        android:contentDescription="@string/img_spot"
         android:layout_width="101dip"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
