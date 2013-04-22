@@ -1,10 +1,15 @@
 package kea.togkontrolloer.helpers;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -61,6 +66,39 @@ public class RequestHelp {
 	}
 	
 	public static String getServerJSON(String url){
+	
+		String result = "";
+		
+		try{
+			
+			URL oUrl = new URL(url);
+			HttpURLConnection urlConnection = (HttpURLConnection) oUrl.openConnection();
+			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+			StringBuffer streamContent = new StringBuffer("");
+			byte[] buffer = new byte[1024];
+			
+			while(in.read(buffer) != -1){
+				streamContent.append(new String(buffer));
+			}
+			
+			result = streamContent.toString();
+			
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+		}
+		
+		return result;
+		
+	}
+	
+	/*public static String getServerJSON(String url){
 		
 		String result = "";
 		
@@ -84,7 +122,7 @@ public class RequestHelp {
 		
 		return result;
 		
-	}
+	}*/
 	
 	public static String getLocalJSON(String filename){
 		
