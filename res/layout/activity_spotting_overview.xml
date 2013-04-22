@@ -58,10 +58,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="13dp"
         android:layout_toRightOf="@+id/backBtn"
-        android:text="Tog stationer:"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="C -> Klamenborg:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white" />
 
     <ImageButton
@@ -69,8 +69,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/spottingOverview"
-        android:layout_alignTop="@+id/headerOverview"
         android:background="@color/bgColor"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_backsmall" />
+
+    <ImageButton
+        android:id="@+id/favoritBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spottingOverview"
+        android:layout_alignRight="@+id/spottingOverview"
+        android:background="@color/bgColor"
+        android:tag="Add"
+        android:src="@drawable/ic_favorit_empty" />
 
 </RelativeLayout>

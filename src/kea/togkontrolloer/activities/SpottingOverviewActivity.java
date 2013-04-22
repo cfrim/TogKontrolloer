@@ -18,6 +18,7 @@ public class SpottingOverviewActivity extends Activity {
 
 	private ListView spottingOverview ;  
 	private ArrayAdapter<String> listAdapter ;  
+	ImageButton favoritBtn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,16 @@ public class SpottingOverviewActivity extends Activity {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
         TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
         tv.setText("OVERSIGT - Spottings på stationer"); 
-		
+        // Back button
+        ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+            	finish();
+            }
+
+        });
+
+         
 		ImageButton spotBtn = (ImageButton) findViewById(R.id.spot);
 		spotBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -69,5 +79,27 @@ public class SpottingOverviewActivity extends Activity {
             }
 
         });
+              
+        // Favorit button
+        favoritBtn = (ImageButton) findViewById(R.id.favoritBtn);
+        favoritBtn.setOnClickListener(favoritBtnHandler);
 	}
+
+		View.OnClickListener favoritBtnHandler = new View.OnClickListener(){
+		public void onClick(View v) {
+			ImageButton favoritBtn = (ImageButton)findViewById(R.id.favoritBtn);
+			
+			if (favoritBtn.getTag().toString().equals("Add"))
+				{
+				favoritBtn.setImageResource(R.drawable.ic_favorit_added);
+				favoritBtn.setTag("No_add");
+				}
+			
+			else if (favoritBtn.getTag().toString().equals("No_add"))
+			{
+				favoritBtn.setImageResource(R.drawable.ic_favorit_empty);
+				favoritBtn.setTag("Add");
+				}	
+		}
+    };
 }
