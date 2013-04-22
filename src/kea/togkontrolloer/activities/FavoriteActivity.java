@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import kea.togkontrolloer.R;
 import kea.togkontrolloer.adapters.CustomListView;
-import kea.togkontrolloer.adapters.LazyAdapter;
+import kea.togkontrolloer.adapters.ListImageAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,15 +33,21 @@ public class FavoriteActivity extends Activity {
     	
     	ArrayList<CustomListView> favoriteList = new ArrayList<CustomListView>();
         
-        CustomListView theItemObject = new CustomListView();
-        theItemObject.title = "Shooot";
-        favoriteList.add(theItemObject);
-        favoriteList.add(theItemObject);
+    	CustomListView theItemObject = new CustomListView();
+    	theItemObject.title = "Klampenborg";
+    	theItemObject.image = R.drawable.c;
         favoriteList.add(theItemObject);
         
-        LazyAdapter adapter = new LazyAdapter(this, favoriteList);
+        CustomListView theItemObject1 = new CustomListView();
+        theItemObject1.title = "Lortenborg";
+        theItemObject1.image = R.drawable.a;
+        favoriteList.add(theItemObject1);
+
+        
+        ListImageAdapter adapter = new ListImageAdapter(this, favoriteList);
         favoriteListView.setAdapter(adapter);
 		
+        
 		ImageButton spotBtn = (ImageButton) findViewById(R.id.spot);
 		spotBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
