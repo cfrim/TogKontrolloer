@@ -48,7 +48,7 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		pDialog.setMax(100);
 		pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		pDialog.show();
-		
+
 	}
 
 	@Override

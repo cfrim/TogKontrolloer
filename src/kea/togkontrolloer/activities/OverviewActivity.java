@@ -1,7 +1,6 @@
 package kea.togkontrolloer.activities;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import kea.togkontrolloer.R;
 import kea.togkontrolloer.adapters.CustomListViewItem;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,7 +56,7 @@ public class OverviewActivity extends Activity {
 
             	public void onItemClick(AdapterView<?> parent, View view,
             		      int position, long id) {
-            		    switch( position )
+            		    switch(position)
             		    {
             		       case 0:  Intent newActivity = new Intent(view.getContext(), SpottingOverviewActivity.class);     
             		                startActivity(newActivity);

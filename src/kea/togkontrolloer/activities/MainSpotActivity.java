@@ -2,43 +2,38 @@ package kea.togkontrolloer.activities;
 
 import java.util.ArrayList;
 
+import kea.togkontrolloer.adapters.StationSpinnerAdapter;
 import kea.togkontrolloer.async.MainSpotDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
-import kea.togkontrolloer.helpers.RequestMaker;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import kea.togkontrolloer.R;
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.graphics.Color;
+
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 public class MainSpotActivity extends Activity {
 	
 	private ArrayList<Station> stations;
 	private ArrayList<TrainLine> trainLines;
-	
+
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        final Activity activity;
+        activity = this;
         // REQUEST FEATURES
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         
@@ -54,6 +49,56 @@ public class MainSpotActivity extends Activity {
         // GET DATA
         MainSpotDownloadTask mainSpotDownloadTask = new MainSpotDownloadTask(this);
         mainSpotDownloadTask.execute();
+        
+        
+        // TrainlineSpinner On item selected
+        // Get GUI elements
+        final TextView fromStationText = (TextView)findViewById(R.id.fromStationText);
+        final TextView toStationText = (TextView)findViewById(R.id.toStationText);
+        
+        Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
+        final Spinner fromStationsSpinner = (Spinner)findViewById(R.id.fromStationsSpinner);
+        final Spinner toStationsSpinner = (Spinner)findViewById(R.id.toStationsSpinner);
+        
+        trainLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View arg1,
+					int position, long arg3) {
+				try{
+					TrainLine t;
+					t = (TrainLine) parent.getItemAtPosition(position);
+					// If the selected trainline id is 0 (NOT SELECTED)
+					if(t.getId() == 0){
+						toStationText.setVisibility(View.GONE);
+						toStationsSpinner.setVisibility(View.GONE);
+						fromStationText.setText("Vælg station");
+						
+						// Get all stations
+						ArrayList<Station> stationsList = RequestHelp.getStations();
+						StationSpinnerAdapter stationsSpinnerAdapter = new StationSpinnerAdapter(activity, stationsList);
+						fromStationsSpinner.setAdapter(stationsSpinnerAdapter);
+						
+					}
+					else{
+						toStationText.setVisibility(View.VISIBLE);
+						toStationsSpinner.setVisibility(View.VISIBLE);
+						fromStationText.setText("Fra station:");
+					}
+				}
+				catch(Exception e){
+					Log.e("trainline select", e.toString());
+				}
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
         
         
         // NAVIGATION EVENTS

@@ -201,6 +201,7 @@ public class RequestHelp {
 		
 		String filename = "stations.json";
 		ArrayList<Station> stations = new ArrayList<Station>();
+		
 		String requestJSON;
 		
 		if(isConnected() && (!fileExists(filename) || MathHelp.getTimeDiff("now", fileTimestamp(filename)) >= 60 * 24 )){

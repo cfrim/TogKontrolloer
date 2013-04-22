@@ -1,7 +1,7 @@
 package kea.togkontrolloer.adapters;
 
 import java.util.ArrayList;
-
+import kea.togkontrolloer.R;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
 import android.app.Activity;
@@ -11,22 +11,25 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 //The custom spinner adapters are created in order to be able to pass objects into the spinners instead of strings
 //It is mainly taken from http://stackoverflow.com/questions/6562236/android-spinner-databind-using-array-list
-public class TrainLineSpinnerAdapter implements SpinnerAdapter{
+public class TrainLineSpinnerAdapter extends BaseAdapter{
 
  /**
   * The internal data (the ArrayList with the Objects).
   */
  Activity activity;
- ArrayList<TrainLine> data;
+ ArrayList<TrainLine> data = new ArrayList<TrainLine>();
+ 
  
  public TrainLineSpinnerAdapter(Activity activity, ArrayList<TrainLine> data){
      this.activity = activity;
-	 this.data = data;
+     this.data.add(new TrainLine(0, "Ikke i tog", "", "", new ArrayList<Station>()));
+     this.data.addAll(data);
  }
 
 
@@ -54,7 +57,7 @@ public class TrainLineSpinnerAdapter implements SpinnerAdapter{
 
  @Override
  public int getItemViewType(int position) {
- 	return android.R.layout.simple_spinner_dropdown_item;
+ 	return R.layout.list_row;
  }
  
 
@@ -66,7 +69,13 @@ public class TrainLineSpinnerAdapter implements SpinnerAdapter{
  public View getView(int position, View convertView, ViewGroup parent) {
  	TextView v = new TextView(activity.getApplicationContext());
      v.setTextColor(Color.BLACK);
-     v.setText(data.get(position).getName()+" - "+data.get(position).getDestination());
+     if(data.get(position).getId() != 0){
+    	v.setText(data.get(position).getName()+" - "+data.get(position).getDestination()); 
+     }
+     else{
+    	 v.setText(data.get(position).getName());  
+     }
+     
      v.setPadding(10, 10, 10, 10);
      return v;
  }
@@ -101,10 +110,6 @@ public class TrainLineSpinnerAdapter implements SpinnerAdapter{
 	@Override
 	public View getDropDownView(int position, View convertView,
 			ViewGroup parent) {
-		
-		
-		    LayoutInflater vi = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		    convertView = vi.inflate(android.R.layout.simple_spinner_dropdown_item, null);
 		  
 	    
 		return getView(position, convertView, parent);
