@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -20,6 +21,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -95,6 +97,28 @@ public class RequestHelp {
 		}
 		
 		return result;
+		
+	}
+	
+	public static boolean setLocalJSON(String filename, String content){
+		
+		boolean success = true;
+		
+		FileOutputStream file;
+		try {
+			file = context.openFileOutput(filename, Context.MODE_PRIVATE);
+			file.write(content.getBytes());
+			file.close();
+		} catch (FileNotFoundException e) {
+			success = false;
+			e.printStackTrace();
+		} catch (IOException e) {
+			success = false;
+			e.printStackTrace();
+		}
+			
+		
+		return success;
 		
 	}
 	
@@ -175,15 +199,120 @@ public class RequestHelp {
 
 	public static ArrayList<Station> getStations(){
 		
+		String filename = "stations.json";
 		ArrayList<Station> stations = new ArrayList<Station>();
+		String requestJSON;
 		
-		if(isConnected()){
+		if(isConnected() && (!fileExists(filename) || MathHelp.getTimeDiff("now", fileTimestamp(filename)) >= 60 * 24 )){
 			
+			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getStations&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+			setLocalJSON(filename, requestJSON);
+			
+		}else{
+			
+			requestJSON = getLocalJSON(filename);
+			
+		}
+		
+		
+		if(requestJSON != ""){
+			
+			Request request = getRequest(requestJSON);
+			
+			try {
+				JSONArray stationsJSON = new JSONArray(request.getOut());
+				
+				int count = stationsJSON.length();
+				for(int i = 0; i < count; i++){
+					
+					JSONObject stationJSON = stationsJSON.getJSONObject(i);
+					int id = stationJSON.getInt("id");
+					String name = stationJSON.getString("name");
+					double lat = stationJSON.getDouble("lat");
+					double lon = stationJSON.getDouble("lon");
+					
+					stations.add(new Station(id, name, lat, lon));
+					
+				}
+				
+				
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+			}
 			
 			
 		}
 		
 		return stations;
+		
+	}
+	
+	public static ArrayList<TrainLine> getTrainLines(){
+		
+		String filename = "trainlines.json";
+		ArrayList<TrainLine> trainLines = new ArrayList<TrainLine>();
+		String requestJSON;
+		
+		if(isConnected() && (!fileExists(filename) || MathHelp.getTimeDiff("now", fileTimestamp(filename)) >= 60 * 24 )){
+			
+			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+			setLocalJSON(filename, requestJSON);
+			
+		}else{
+			
+			requestJSON = getLocalJSON(filename);
+			
+		}
+		
+		
+		if(requestJSON != ""){
+			
+			Request request = getRequest(requestJSON);
+			
+			try {
+				JSONArray linesJSON = new JSONArray(request.getOut());
+				
+				int count = linesJSON.length();
+				for(int i = 0; i < count; i++){
+					
+					JSONObject lineJSON = linesJSON.getJSONObject(i);
+					int id = lineJSON.getInt("id");
+					String name = lineJSON.getString("name");
+					String destination = lineJSON.getString("destination");
+					String icon = lineJSON.getString("icon");
+					ArrayList<Station> stations = new ArrayList<Station>();
+					
+					JSONArray stationsJSON = lineJSON.getJSONArray("stations");
+					
+					int count2 = stationsJSON.length();
+					for(int i2 = 0; i2 < count2; i2++){
+						
+						JSONObject stationJSON = stationsJSON.getJSONObject(i2);
+						int id2 = stationJSON.getInt("id");
+						String name2 = stationJSON.getString("name");
+						double lat = stationJSON.getDouble("lat");
+						double lon = stationJSON.getDouble("lon");
+						// TODO: int order = stationJSON.getInt("order");
+						
+						stations.add(new Station(id2, name2, lat, lon)); // TODO add order
+						
+					}
+					
+					trainLines.add(new TrainLine(id, name, destination, icon, stations));
+					
+				}
+				
+				
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		return trainLines;
 		
 	}
 	
