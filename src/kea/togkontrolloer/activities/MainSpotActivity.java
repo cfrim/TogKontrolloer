@@ -46,11 +46,7 @@ public class MainSpotActivity extends Activity {
         Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
 	    ArrayList<TrainLine> trainLines = new ArrayList<TrainLine>();
 	    
-	    
 
-	    
-	   // ArrayAdapter<TrainLine> dataAdapter = new ArrayAdapter<TrainLine>(this, android.R.layout.simple_spinner_item, trainLines);
-	   // dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    String result; 
 	    JSONObject jResult;
 	    final JSONArray jOut;
@@ -70,7 +66,7 @@ public class MainSpotActivity extends Activity {
 	    		JSONObject json_data = jOut.getJSONObject(i);
 
 	    		id = json_data.getInt("id");
-	    		name = json_data.getString("name") + " - " + json_data.getString("destination");
+	    		name = json_data.getString("name") + " mod " + json_data.getString("destination");
 	    		TrainLine theTrainLine = new TrainLine(name, id);
 	    		trainLines.add(theTrainLine);
 	    		
@@ -148,9 +144,6 @@ public class MainSpotActivity extends Activity {
 	    }
 	    
         
-      
-        //
-        
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), FavoriteActivity.class);
@@ -170,10 +163,11 @@ public class MainSpotActivity extends Activity {
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(myIntent);
             }
-
         });
         
     }
+	
+	
     
     // The custom spinner adapters are created in order to be able to pass objects into the spinners instead of strings
     // It is mainly taken from http://stackoverflow.com/questions/6562236/android-spinner-databind-using-array-list
