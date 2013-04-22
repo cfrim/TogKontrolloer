@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name"></string>
+    <string name="app_name">TogKontrollør</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
@@ -35,5 +35,6 @@
     <string name="img_spot">Spot knap</string>
     <string name="img_overview">Oversigt knap</string>
     <string name="TogLinjer">Tog linjer:</string>
+    <string name="empty_string"></string>
 
 </resources>

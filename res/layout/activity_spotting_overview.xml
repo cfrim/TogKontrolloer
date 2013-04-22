@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@color/MenuColor"
-        android:src="@drawable/ic_favoritter" />
+        android:src="@drawable/ic_favoritter_l" />
 
     <ImageButton
         android:contentDescription="@string/img_overview"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_oversigt" />
+        android:src="@drawable/ic_oversigt_l" />
 
     <ImageButton
         android:contentDescription="@string/img_spot"
@@ -38,7 +38,7 @@
         android:layout_toLeftOf="@+id/overview"
         android:layout_toRightOf="@+id/favorits"
         android:background="@color/MenuColor"
-        android:src="@drawable/ic_spot" />
+        android:src="@drawable/ic_spot_l" />
 
     <ListView
         android:id="@+id/spottingOverview"

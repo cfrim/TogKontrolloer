@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@color/MenuColor"
-        android:src="@drawable/ic_favoritter" />
+        android:src="@drawable/ic_favoritter_l" />
 
     <ImageButton
         android:id="@+id/overview"
@@ -25,7 +25,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@color/MenuColor"
-        android:src="@drawable/ic_oversigt" />
+        android:src="@drawable/ic_oversigt_l" />
 
     <ImageButton
         android:id="@+id/spot"
@@ -35,7 +35,8 @@
         android:layout_toLeftOf="@+id/overview"
         android:layout_toRightOf="@+id/favorits"
         android:background="@color/SelectedColor"
-        android:src="@drawable/ic_spot" />
+        android:scaleType="center"
+        android:src="@drawable/ic_spot_l" />
 
     <TextView
         android:id="@+id/toStationText"
