@@ -41,12 +41,26 @@
         android:id="@+id/trainlinesOverview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/favorits"
+        android:layout_below="@+id/headerOverview"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/marginLR"
         android:layout_marginRight="@dimen/marginLR"
-        android:cacheColorHint="@color/bgColor"
-        android:layout_above="@+id/favorits"
-        android:layout_centerHorizontal="true" >
+        android:cacheColorHint="@color/bgColor" >
 
     </ListView>
+
+    <TextView
+        android:id="@+id/headerOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/marginLR"
+        android:layout_marginRight="@dimen/marginLR"
+        android:textColor="@color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Train lines:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

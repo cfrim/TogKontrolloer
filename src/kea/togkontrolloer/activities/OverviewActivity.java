@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -31,8 +33,8 @@ public class OverviewActivity extends Activity {
         trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );  
         
      // Create and populate a List of planet names.  
-        String[] planets = new String[] { "Mercury", "Venus", "Earth", "Mars",  
-                                          "Jupiter", "Saturn", "Uranus", "Neptune"};    
+        String[] planets = new String[] { "Klampenborg", "Ordrup", "Charlottenlund", "Hellerup",  
+                                          "Svanem¿llen", "Nordhavn", "¯sterbro", "N¿report", "Vesterport"};    
         ArrayList<String> planetList = new ArrayList<String>();  
         planetList.addAll( Arrays.asList(planets) );  
           
@@ -43,13 +45,26 @@ public class OverviewActivity extends Activity {
         // into the ArrayAdapter constructor, you must not add more items.   
         // Otherwise an exception will occur.  
         listAdapter.add( "Ceres" );  
-        listAdapter.add( "Pluto" );  
-        listAdapter.add( "Haumea" );  
-        listAdapter.add( "Makemake" );  
-        listAdapter.add( "Eris" );  
+        listAdapter.add( "Pluto" );
           
         // Set the ArrayAdapter as the ListView's adapter.  
-        trainlinesOverview.setAdapter( listAdapter );    
+        trainlinesOverview.setAdapter( listAdapter );
+        
+        trainlinesOverview.setOnItemClickListener(new OnItemClickListener() {
+
+            	public void onItemClick(AdapterView<?> parent, View view,
+            		      int position, long id) {
+            		    switch( position )
+            		    {
+            		       case 0:  Intent newActivity = new Intent(view.getContext(), MainSpotActivity.class);     
+            		                startActivity(newActivity);
+            		                break;
+            		       case 1:  Intent newActivity2 = new Intent(view.getContext(), FavoriteActivity.class);     
+            		                startActivity(newActivity2);
+            		                break;
+            		    }
+            }
+        });
         
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
         TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 

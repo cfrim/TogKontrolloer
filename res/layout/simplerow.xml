@@ -3,8 +3,6 @@
 	 android:id="@+id/rowTextView"
 	 android:layout_width="fill_parent"
 	 android:layout_height="wrap_content"
-	 android:state_focused="true"
-	 android:state_pressed="true"
 	 android:drawable="@color/MenuColor"
 	 android:textColor="@color/white"
 	 android:padding="10dp"
