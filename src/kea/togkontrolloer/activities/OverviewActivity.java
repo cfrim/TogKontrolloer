@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import kea.togkontrolloer.R;
+import kea.togkontrolloer.adapters.CustomListViewItem;
+import kea.togkontrolloer.adapters.ListImageAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 public class OverviewActivity extends Activity {
 	
 	private ListView trainlinesOverview ;  
-	private ArrayAdapter<String> listAdapter ;  
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +33,26 @@ public class OverviewActivity extends Activity {
         trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );  
         
      // Create and populate a List of planet names.  
-        String[] planets = new String[] { "Klampenborg", "Ballerup", "Hiller¿d", "Holte",  
-                                          "Ny Ellebjerg", "Frederikssund", "¯sterbro", "N¿report", "Vesterport"};    
-        ArrayList<String> planetList = new ArrayList<String>();  
-        planetList.addAll( Arrays.asList(planets) );  
-          
-        // Create ArrayAdapter using the planet list.  
-        listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, planetList);  
+        String[] planets = new String[] { "Klampenborg", "Ballerup", "Hillerød", "Holte",  
+                                          "Ny Ellebjerg", "Frederikssund", "Østerbro", "Nøreport", "Vesterport"};    
+        ArrayList<CustomListViewItem> planetList = new ArrayList<CustomListViewItem>();  
+       
+        
+        for(int i=0;i<planets.length; i++){
+        	CustomListViewItem item = new CustomListViewItem(1, planets[i], R.drawable.b);
+        	planetList.add(item); 
+        }
+           
+        // Create ArrayAdapter using the planet list.
+        
           
         // Add more planets. If you passed a String[] instead of a List<String>   
         // into the ArrayAdapter constructor, you must not add more items.   
         // Otherwise an exception will occur.  
-        listAdapter.add( "Ceres" );  
-        listAdapter.add( "Pluto" );
           
-        // Set the ArrayAdapter as the ListView's adapter.  
-        trainlinesOverview.setAdapter( listAdapter );
+        // Set the ArrayAdapter as the ListView's adapter. 
+        ListImageAdapter listAdapter = new ListImageAdapter(this, planetList);
+        trainlinesOverview.setAdapter(listAdapter);
         
         trainlinesOverview.setOnItemClickListener(new OnItemClickListener() {
 

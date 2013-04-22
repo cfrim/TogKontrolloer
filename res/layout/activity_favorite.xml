@@ -9,12 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".FavoriteActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/favorite" />
-
     <ImageButton
         android:id="@+id/favorits"
         android:contentDescription="@string/img_favorits"
@@ -51,17 +45,17 @@
        android:layout_height="wrap_content"
        android:layout_alignParentLeft="true"
        android:layout_alignParentRight="true"
-       android:layout_below="@+id/textView1"
        android:layout_marginTop="18dp"
        android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/favoritesList"
-            android:layout_width="fill_parent"
-            android:layout_height="402dp"
-            android:divider="#b5b5b5"
-            android:dividerHeight="1dp"
-            android:listSelector="@drawable/list_selector" />
+       <ListView
+           android:id="@+id/favoritesList"
+           android:layout_width="fill_parent"
+           android:layout_height="419dp"
+           android:divider="#b5b5b5"
+           android:dividerHeight="1dp"
+           android:listSelector="@drawable/list_selector" >
+       </ListView>
 
     </LinearLayout>
 

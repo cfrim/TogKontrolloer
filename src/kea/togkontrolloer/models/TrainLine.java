@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class TrainLine {
 
 	private int id;
-	public String name;
+	private String name;
 	private String destination;
 	private String icon;
 	private ArrayList<Station> stations;

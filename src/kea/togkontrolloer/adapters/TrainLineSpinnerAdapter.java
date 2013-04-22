@@ -66,7 +66,7 @@ public class TrainLineSpinnerAdapter implements SpinnerAdapter{
  public View getView(int position, View convertView, ViewGroup parent) {
  	TextView v = new TextView(activity.getApplicationContext());
      v.setTextColor(Color.BLACK);
-     v.setText(data.get(position).name);
+     v.setText(data.get(position).getName()+" - "+data.get(position).getDestination());
      v.setPadding(10, 10, 10, 10);
      return v;
  }
