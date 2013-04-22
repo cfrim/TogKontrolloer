@@ -1,6 +1,10 @@
 package kea.togkontrolloer.activities;
 
+import java.util.ArrayList;
+
 import kea.togkontrolloer.R;
+import kea.togkontrolloer.adapters.CustomListView;
+import kea.togkontrolloer.adapters.LazyAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,10 +12,12 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class FavoriteActivity extends Activity {
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,6 +28,19 @@ public class FavoriteActivity extends Activity {
         TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
         tv.setText("FAVORITTER"); 
 		
+    	
+    	ListView favoriteListView = (ListView)findViewById(R.id.favoritesList);
+    	
+    	ArrayList<CustomListView> favoriteList = new ArrayList<CustomListView>();
+        
+        CustomListView theItemObject = new CustomListView();
+        theItemObject.title = "Shooot";
+        favoriteList.add(theItemObject);
+        favoriteList.add(theItemObject);
+        favoriteList.add(theItemObject);
+        
+        LazyAdapter adapter = new LazyAdapter(this, favoriteList);
+        favoriteListView.setAdapter(adapter);
 		
 		ImageButton spotBtn = (ImageButton) findViewById(R.id.spot);
 		spotBtn.setOnClickListener(new View.OnClickListener() {
@@ -30,7 +49,6 @@ public class FavoriteActivity extends Activity {
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(myIntent);
             }
-
         });
 		
 		 ImageButton overviewBtn = (ImageButton) findViewById(R.id.overview);
@@ -40,7 +58,6 @@ public class FavoriteActivity extends Activity {
 	                myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	                startActivity(myIntent);
 	            }
-
 	        });
 	}
 
