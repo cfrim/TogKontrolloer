@@ -2,6 +2,7 @@ package kea.togkontrolloer.activities;
 
 import java.util.ArrayList;
 
+import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.helpers.RequestMaker;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
@@ -30,13 +31,16 @@ import android.widget.TextView;
 
 public class MainSpotActivity extends Activity {
 	
-
+	private ArrayList<Station> stations;
+	private ArrayList<TrainLine> trainLines;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Use custom styling on title bar 
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_main_spot);
+        
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
         final TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
         tv.setText("SPOTTING");
@@ -55,7 +59,7 @@ public class MainSpotActivity extends Activity {
         // TrainLineSpinner section
 	    	
 	    	// Get trainLines and stations
-        	result = RequestMaker.makeRequest("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+        	result = RequestHelp.getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
 	    
 	    	jResult = new JSONObject(result);
 	    	

@@ -68,11 +68,11 @@ public class RequestHelp {
 	public static String getServerJSON(String url){
 	
 		String result = "";
-		
+		HttpURLConnection urlConnection;
 		try{
 			
 			URL oUrl = new URL(url);
-			HttpURLConnection urlConnection = (HttpURLConnection) oUrl.openConnection();
+			urlConnection = (HttpURLConnection) oUrl.openConnection();
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 			StringBuffer streamContent = new StringBuffer("");
 			byte[] buffer = new byte[1024];
@@ -83,6 +83,8 @@ public class RequestHelp {
 			
 			result = streamContent.toString();
 			
+			urlConnection.disconnect();
+			
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -90,8 +92,6 @@ public class RequestHelp {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			
 		}
 		
 		return result;
