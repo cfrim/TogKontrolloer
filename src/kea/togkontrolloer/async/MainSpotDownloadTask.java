@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Spinner;
 import kea.togkontrolloer.activities.MainSpotActivity;
+import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
@@ -65,6 +66,9 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		activity.setTrainLines(fetchedLines);
 		
 		Spinner trainLineSpinner = (Spinner) activity.findViewById(kea.togkontrolloer.R.id.trainLinesSpinner);
+		TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(activity, activity.getTrainLines());
+		trainLineSpinner.setAdapter(trainLineAdapter);
+		// bob
 		
 	}
 	
