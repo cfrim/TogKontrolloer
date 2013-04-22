@@ -16,10 +16,10 @@ import android.widget.TextView;
 public class ListImageAdapter extends BaseAdapter{
  
     private Activity activity;
-    private ArrayList<CustomListView> data;
+    private ArrayList<CustomListViewItem> data;
     private static LayoutInflater inflater=null;
  
-    public ListImageAdapter(Activity a, ArrayList<CustomListView> d) {
+    public ListImageAdapter(Activity a, ArrayList<CustomListViewItem> d) {
         this.activity = a;
         this.data=d;
         this.inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,7 +44,7 @@ public class ListImageAdapter extends BaseAdapter{
  
         TextView title = (TextView)vi.findViewById(R.id.title); // title
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image);
-        CustomListView item = new CustomListView();
+        CustomListViewItem item;
         item = data.get(position);
  
         // Setting all values in listview
