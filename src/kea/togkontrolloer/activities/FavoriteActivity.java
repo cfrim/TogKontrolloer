@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import kea.togkontrolloer.R;
 import kea.togkontrolloer.adapters.TrainLineListAdapter;
-import kea.togkontrolloer.models.CustomListViewItem;
 import kea.togkontrolloer.models.TrainLine;
 import android.os.Bundle;
 import android.app.Activity;

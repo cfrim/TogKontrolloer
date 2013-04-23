@@ -3,7 +3,6 @@ package kea.togkontrolloer.adapters;
 import java.util.ArrayList;
 
 import kea.togkontrolloer.R;
-import kea.togkontrolloer.models.CustomListViewItem;
 import kea.togkontrolloer.models.TrainLine;
 import android.app.Activity;
 import android.content.Context;
