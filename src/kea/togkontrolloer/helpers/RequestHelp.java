@@ -35,6 +35,8 @@ public class RequestHelp {
 	
 	private static Context context;
 	private static Gson gson = new Gson();
+	private static String filenameTrainLines = "trainlines.json";
+	private static String filenameStations = "stations.json";
 	
 	public static void setContext(Context context){
 		RequestHelp.context = context;
@@ -70,42 +72,9 @@ public class RequestHelp {
 		
 		Request request = getRequest(file);
 	
-		return request.getTimestamp();
+		return request.getLocalTimestamp();
 		
 	}
-	
-	/*public static String getServerJSON(String url){
-	
-		String result = "";
-		HttpURLConnection urlConnection;
-		try{
-			
-			URL oUrl = new URL(url);
-			urlConnection = (HttpURLConnection) oUrl.openConnection();
-			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-			StringBuffer streamContent = new StringBuffer("");
-			byte[] buffer = new byte[1024];
-			
-			while(in.read(buffer) != -1){
-				streamContent.append(new String(buffer));
-			}
-			
-			result = streamContent.toString();
-			
-			Log.e("getServerJSON", result);
-			
-			urlConnection.disconnect();
-			
-			
-		} catch (MalformedURLException e) {
-			Log.e("getServerJSON", e.toString());
-		} catch (IOException e) {
-			Log.e("getServerJSON", e.toString());
-		}
-		
-		return result;
-		
-	}*/
 	
 	public static String getServerJSON(String url){
 		try {
@@ -179,32 +148,6 @@ public class RequestHelp {
 		
 	}
 	
-	/*public static String getServerJSON(String url){
-		
-		String result = "";
-		
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(url);
-		try{
-			HttpResponse response = httpClient.execute(httpGet);
-			StatusLine statusLine = response.getStatusLine();
-			if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-				HttpEntity entity = response.getEntity();
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				entity.writeTo(out);
-		        out.close();
-		        result = out.toString();
-			}
-		}catch (ClientProtocolException e) {
-		    // handle exception
-		} catch (IOException e) {
-		    // handle exception
-		}
-		
-		return result;
-		
-	}*/
-	
 	public static String getLocalJSON(String filename){
 		
 		String result = "";
@@ -246,22 +189,35 @@ public class RequestHelp {
 		return request;
 		
 	}
-
+	
 	public static ArrayList<Station> getStations(){
 		
-		String filename = "stations.json";
+		if(isConnected() && (!fileExists(filenameStations) || MathHelp.getTimeDiff("now", fileTimestamp(filenameStations)) >= 60 * 24 )){
+			
+			return getStations(true);
+			
+		}else{
+			
+			return getStations(false);
+			
+		}
+		
+	}
+
+	public static ArrayList<Station> getStations(boolean getOnline){
+		
 		ArrayList<Station> stations = new ArrayList<Station>();
 		
 		String requestJSON;
 		
-		if(isConnected() && (!fileExists(filename) || MathHelp.getTimeDiff("now", fileTimestamp(filename)) >= 60 * 24 )){
+		if(getOnline){
 			
 			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getStations&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
-			setLocalJSON(filename, requestJSON);
+			setLocalJSON(filenameStations, requestJSON);
 			
 		}else{
 			
-			requestJSON = getLocalJSON(filename);
+			requestJSON = getLocalJSON(filenameStations);
 			
 		}
 		
@@ -298,26 +254,33 @@ public class RequestHelp {
 	
 	public static ArrayList<TrainLine> getTrainLines(){
 		
-		String filename = "trainlines.json";
-		ArrayList<TrainLine> trainLines = new ArrayList<TrainLine>();
-		String requestJSON;
-		
-		/*if(isConnected() && (!fileExists(filename) || MathHelp.getTimeDiff("now", fileTimestamp(filename)) >= 60 * 24 )){
+		if(isConnected() && (!fileExists(filenameTrainLines) || MathHelp.getTimeDiff("now", fileTimestamp(filenameTrainLines)) >= 60 * 24 )){
 			
-			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
-			setLocalJSON(filename, requestJSON);
-			requestJSON = getLocalJSON(filename);
-			Log.e("requestJSON", "bob: "+requestJSON);
+			return getTrainLines(true);
 			
 		}else{
 			
-			requestJSON = getLocalJSON(filename);
-			//bo
+			return getTrainLines(false);
 			
-		}*/
+		}
 		
-		requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
-		setLocalJSON(filename+"2", requestJSON);
+	}
+	
+	public static ArrayList<TrainLine> getTrainLines(boolean getOnline){
+		
+		ArrayList<TrainLine> trainLines = new ArrayList<TrainLine>();
+		String requestJSON;
+		
+		if(getOnline){
+			
+			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+			setLocalJSON(filenameTrainLines, requestJSON);
+			
+		}else{
+			
+			requestJSON = getLocalJSON(filenameTrainLines);
+			
+		}
 		
 		
 		if(requestJSON != ""){
@@ -347,6 +310,22 @@ public class RequestHelp {
 		
 		return trainLines;
 		
+	}
+
+	public static String getFilenameTrainLines() {
+		return filenameTrainLines;
+	}
+
+	public static void setFilenameTrainLines(String filenameTrainLines) {
+		RequestHelp.filenameTrainLines = filenameTrainLines;
+	}
+
+	public static String getFilenameStations() {
+		return filenameStations;
+	}
+
+	public static void setFilenameStations(String filenameStations) {
+		RequestHelp.filenameStations = filenameStations;
 	}
 	
 }

@@ -50,29 +50,25 @@ public class MainSpotActivity extends Activity {
         tv.setText("SPOTTING");
         
         
-        /*RequestHelp.setContext(this);
-        if(RequestHelp.fileExists("trainlines.json")){
-        	setTrainLines(RequestHelp.getTrainLines());
+        RequestHelp.setContext(this);
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
+        	setTrainLines(RequestHelp.getTrainLines(false));
         	Spinner trainLineSpinner = (Spinner) findViewById(R.id.trainLinesSpinner);
-    		TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(this, getTrainLines());
+    		TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(this, trainLines);
     		trainLineSpinner.setAdapter(trainLineAdapter);
-        }*/
+        }
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameStations())){
+        	setStations(RequestHelp.getStations(false));
+        	Spinner stationSpinner = (Spinner) findViewById(R.id.fromStationsSpinner);
+        	StationSpinnerAdapter stationAdapter = new StationSpinnerAdapter(this, stations);
+        	stationSpinner.setAdapter(stationAdapter);
+        }
         
         // GET DATA
         MainSpotDownloadTask mainSpotDownloadTask = new MainSpotDownloadTask(this);
         mainSpotDownloadTask.execute();
-        
-        /*try{
-        	Log.d("trainlines.json", "is "+RequestHelp.fileExists("trainlines.json"));
-        }catch(Exception e){
-        	Log.e("trainline problem", "problem: "+e.toString());
-        }
-        
-        try{
-        	trainLines = RequestHelp.getTrainLines();
-        }catch(Exception e){
-        	Log.e("trainline problem", "problem: "+e.toString());
-        }*/
         
         
         
@@ -96,8 +92,7 @@ public class MainSpotActivity extends Activity {
 					// If the selected trainline id is 0 (NOT SELECTED)
 					if(t.getId() == 0){
 						IsInTrain = false;
-
-						fromStationText.setText("Vælg station");
+						fromStationText.setText("V¾lg station");
 						
 						// Get all stations
 						ArrayList<Station> stationsList = RequestHelp.getStations();

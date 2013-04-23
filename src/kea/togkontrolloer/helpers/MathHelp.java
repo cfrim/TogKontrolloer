@@ -52,7 +52,7 @@ public class MathHelp {
 		
 		long diffOnlyMinutes = diff / (60 * 1000);
 		
-		Log.d("getTimeDiff", "d1: "+d1+" ("+date1.toString()+") d2: "+d2+" ("+date2.toString()+") diff: "+diffOnlyMinutes+"min");
+		if(diffOnlyMinutes < 0) diffOnlyMinutes *= -1;
 		
 		return diffOnlyMinutes;
 		
