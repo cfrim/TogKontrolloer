@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import kea.togkontrolloer.adapters.StationSpinnerAdapter;
 import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 import kea.togkontrolloer.async.MainSpotDownloadTask;
+import kea.togkontrolloer.async.MainSpotPostTask;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
@@ -29,15 +30,15 @@ public class MainSpotActivity extends Activity {
 	private ArrayList<Station> stations;
 	private ArrayList<TrainLine> trainLines;
 	public boolean IsInTrain = false;
-
+	public MainSpotActivity activity;
+	
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        
-        final Activity activity;
         activity = this;
+        
         // REQUEST FEATURES
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         
@@ -76,7 +77,6 @@ public class MainSpotActivity extends Activity {
         // TrainlineSpinner On item selected
         // Get GUI elements
         final TextView fromStationText = (TextView)findViewById(R.id.fromStationText);
-        
         final Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
         final Spinner fromStationsSpinner = (Spinner)findViewById(R.id.fromStationsSpinner);
        
@@ -89,10 +89,10 @@ public class MainSpotActivity extends Activity {
 				try{
 					TrainLine t;
 					t = (TrainLine) parent.getItemAtPosition(position);
-					// If the selected trainline id is 0 (NOT SELECTED)
+					// If the selected train line id is 0 (NOT SELECTED)
 					if(t.getId() == 0){
 						IsInTrain = false;
-						fromStationText.setText("V¾lg station");
+						fromStationText.setText("Vælg station");
 						
 						// Get all stations
 						ArrayList<Station> stationsList = RequestHelp.getStations();
@@ -103,7 +103,6 @@ public class MainSpotActivity extends Activity {
 					}
 					else{
 						IsInTrain = true;
-
 						fromStationText.setText("Fra station:");
 						
 						ArrayList<Station> trainLineStationsList = t.getStations();
@@ -126,6 +125,7 @@ public class MainSpotActivity extends Activity {
         	
         });
         
+        // OnClick SPOT
         Button spotButton = (Button) findViewById(R.id.addSpot);
         spotButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -136,7 +136,8 @@ public class MainSpotActivity extends Activity {
 				int trainLineId = selectedTrainLine.getId();
 				int fromStationId = selectedFromStation.getId();
 				Station toStation = null;
-				int toStationId;
+				int toStationId = 0;
+				int userId;
 				
 				if(IsInTrain){
 					ArrayList<Station> selectedTrainLineStations = selectedTrainLine.getStations();
@@ -156,11 +157,14 @@ public class MainSpotActivity extends Activity {
 					}
 					// Setting toStationId
 					toStationId = toStation.getId();
-					// Make spotting ************************************					
+					MainSpotPostTask spotPostTask = new MainSpotPostTask(activity, trainLineId, fromStationId, toStationId);
+					spotPostTask.execute();
 				}
 				else{
-					trainLineId = (Integer) null;
+					trainLineId = 0;
 					// Make spotting ************************************	
+					MainSpotPostTask spotPostTask = new MainSpotPostTask(activity, trainLineId, fromStationId, toStationId);
+					spotPostTask.execute();
 				}
 				
 				

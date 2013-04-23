@@ -37,6 +37,7 @@ public class RequestHelp {
 	private static Gson gson = new Gson();
 	private static String filenameTrainLines = "trainlines.json";
 	private static String filenameStations = "stations.json";
+	private static String filenameUser = "user.json";
 	
 	public static void setContext(Context context){
 		RequestHelp.context = context;
@@ -109,6 +110,44 @@ public class RequestHelp {
 	    }
 	    return null;
 	}
+	
+	
+	public static String postSpotting(String url){
+		try {
+	        URL u = new URL(url);
+	        HttpURLConnection c = (HttpURLConnection) u.openConnection();
+	        c.setRequestMethod("GET");
+	        c.setRequestProperty("Content-length", "0");
+	        c.setUseCaches(false);
+	        c.setAllowUserInteraction(false);
+	        c.setConnectTimeout(50000);
+	        c.setReadTimeout(50000);
+	        c.connect();
+	        int status = c.getResponseCode();
+
+	        switch (status) {
+	            case 200:
+	            case 201:
+	                BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
+	                StringBuilder sb = new StringBuilder();
+	                String line;
+	                while ((line = br.readLine()) != null) {
+	                    sb.append(line+"\n");
+	                }
+	                br.close();
+	                return sb.toString();
+	        }
+
+	    } catch (MalformedURLException ex) {
+	    	Log.e("getServerJSON", ex.toString());
+	    } catch (IOException ex) {
+	        Log.e("getServerJSON", ex.toString());
+	    }
+	    return null;
+	}
+	
+	
+	
 	
 	public static boolean setLocalJSON(String filename, String content){
 		
@@ -274,7 +313,11 @@ public class RequestHelp {
 		if(getOnline){
 			
 			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
-			setLocalJSON(filenameTrainLines, requestJSON);
+			Request request = getRequest(requestJSON); 
+			
+			request.getOut();
+			
+			//setLocalJSON(filenameTrainLines, requestJSON);
 			
 		}else{
 			
@@ -310,6 +353,31 @@ public class RequestHelp {
 		
 		return trainLines;
 		
+	}
+	
+	public static int getUserId(){
+		JsonObject userId;
+		String requestJSON = "";
+		
+		if(fileExists(filenameUser)){
+			requestJSON = getLocalJSON(filenameUser);
+		}
+		else{
+			if(isConnected()){
+				requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getUser&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+				setLocalJSON(filenameUser, requestJSON);
+			}
+		}
+		if(requestJSON == ""){
+			return 0;
+		}
+		else{
+			Request request = getRequest(requestJSON);
+			JsonElement jOut = request.getOut();
+			userId = jOut.getAsJsonObject();
+			
+			return userId.get("id").getAsInt();
+		}
 	}
 
 	public static String getFilenameTrainLines() {

@@ -22,6 +22,7 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 	private ProgressDialog pDialog;
 	private ArrayList<TrainLine> fetchedLines;
 	private ArrayList<Station> fetchedStations;
+	private int fetchedUserId;
 	
 	public MainSpotDownloadTask(MainSpotActivity activity){
 		this.activity = activity;
@@ -33,6 +34,8 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		boolean success = true;
 		
 		RequestHelp.setContext(activity);
+		
+		fetchedUserId = RequestHelp.getUserId();
 		
 		if(downloadTrainLines || downloadStations){
 			fetchedLines = RequestHelp.getTrainLines(true);
