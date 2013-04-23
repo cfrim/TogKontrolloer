@@ -18,19 +18,23 @@ import android.view.View;
 
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainSpotActivity extends Activity {
 	
 	private ArrayList<Station> stations;
 	private ArrayList<TrainLine> trainLines;
+	public boolean IsInTrain = false;
 
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         
         final Activity activity;
         activity = this;
@@ -76,14 +80,13 @@ public class MainSpotActivity extends Activity {
         // TrainlineSpinner On item selected
         // Get GUI elements
         final TextView fromStationText = (TextView)findViewById(R.id.fromStationText);
-        final TextView toStationText = (TextView)findViewById(R.id.toStationText);
         
-        Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
+        final Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
         final Spinner fromStationsSpinner = (Spinner)findViewById(R.id.fromStationsSpinner);
-        final Spinner toStationsSpinner = (Spinner)findViewById(R.id.toStationsSpinner);
+       
         
         trainLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        	
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
@@ -92,20 +95,26 @@ public class MainSpotActivity extends Activity {
 					t = (TrainLine) parent.getItemAtPosition(position);
 					// If the selected trainline id is 0 (NOT SELECTED)
 					if(t.getId() == 0){
-						toStationText.setVisibility(View.GONE);
-						toStationsSpinner.setVisibility(View.GONE);
+						IsInTrain = false;
+
 						fromStationText.setText("Vælg station");
 						
 						// Get all stations
 						ArrayList<Station> stationsList = RequestHelp.getStations();
+						// Set adapter
 						StationSpinnerAdapter stationsSpinnerAdapter = new StationSpinnerAdapter(activity, stationsList);
 						fromStationsSpinner.setAdapter(stationsSpinnerAdapter);
 						
 					}
 					else{
-						toStationText.setVisibility(View.VISIBLE);
-						toStationsSpinner.setVisibility(View.VISIBLE);
+						IsInTrain = true;
+
 						fromStationText.setText("Fra station:");
+						
+						ArrayList<Station> trainLineStationsList = t.getStations();
+						StationSpinnerAdapter stationsSpinnerAdapter = new StationSpinnerAdapter(activity, trainLineStationsList);
+						fromStationsSpinner.setAdapter(stationsSpinnerAdapter);
+
 					}
 				}
 				catch(Exception e){
@@ -121,6 +130,47 @@ public class MainSpotActivity extends Activity {
 			}
         	
         });
+        
+        Button spotButton = (Button) findViewById(R.id.addSpot);
+        spotButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(IsInTrain){
+					TrainLine selectedTrainLine = (TrainLine) trainLinesSpinner.getSelectedItem();
+					Station selectedFromStation = (Station) fromStationsSpinner.getSelectedItem();
+					int trainLineId = selectedTrainLine.getId();
+					int fromStationId = selectedFromStation.getId();
+					Station toStation = null;
+					ArrayList<Station> selectedTrainLineStations = selectedTrainLine.getStations();
+
+					for (int i = 0; i <= selectedTrainLineStations.size()-1; i++) {
+					    if (selectedTrainLineStations.get(i).getId() == fromStationId){
+					    	if(i == selectedTrainLineStations.size()-1){
+					    		toStation = null;	
+					    	}
+					    	else{
+					    		toStation = selectedTrainLineStations.get(i+1);
+					    	}
+					    	try{
+					    		Toast.makeText(activity, "Next station is: " + toStation.getName(), Toast.LENGTH_LONG).show();
+					    	}
+					    	catch(Exception e){
+					    		Log.e("Printing next station", "Could not print next station");
+					    	}
+
+					    	break;  
+					    }
+					  
+					}
+				}
+				else{
+					
+				}
+				
+				
+			}
+		});
         
         
         // NAVIGATION EVENTS
