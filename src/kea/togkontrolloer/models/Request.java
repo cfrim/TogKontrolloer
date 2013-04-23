@@ -1,28 +1,40 @@
 package kea.togkontrolloer.models;
 
+import com.google.gson.JsonElement;
+
 public class Request {
 
-	private String out;
+	private JsonElement out;
 	private String error;
 	private String func;
 	private String timestamp;
+	private String localTimestamp;
 	
 	public Request(){
 		
 	}
 	
-	public Request(String out, String error, String func, String timestamp) {
+	public Request(JsonElement out, String error, String func, String timestamp) {
 		this.out = out;
 		this.error = error;
 		this.func = func;
 		this.timestamp = timestamp;
 	}
 
-	public String getOut() {
+	
+	public Request(JsonElement out, String error, String func, String timestamp, String localTimestamp) {
+		this.out = out;
+		this.error = error;
+		this.func = func;
+		this.timestamp = timestamp;
+		this.localTimestamp = localTimestamp;
+	}
+	
+	public JsonElement getOut() {
 		return out;
 	}
 
-	public void setOut(String out) {
+	public void setOut(JsonElement out) {
 		this.out = out;
 	}
 
@@ -48,6 +60,14 @@ public class Request {
 
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public String getLocalTimestamp() {
+		return localTimestamp;
+	}
+
+	public void setLocalTimestamp(String localTimestamp) {
+		this.localTimestamp = localTimestamp;
 	}
 	
 }

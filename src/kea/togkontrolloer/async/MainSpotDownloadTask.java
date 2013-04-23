@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.widget.Spinner;
 import kea.togkontrolloer.activities.MainSpotActivity;
 import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
+import kea.togkontrolloer.helpers.MathHelp;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
@@ -34,7 +35,7 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		fetchedStations = RequestHelp.getStations();
 		publishProgress(50);
 		
-		return false;
+		return success;
 	}
 	
 	@Override
@@ -46,7 +47,7 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		pDialog.setMessage("Downloader Info");
 		pDialog.setIndeterminate(false);
 		pDialog.setMax(100);
-		pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		pDialog.show();
 
 	}

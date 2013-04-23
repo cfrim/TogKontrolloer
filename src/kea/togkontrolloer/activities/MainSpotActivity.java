@@ -1,8 +1,8 @@
 package kea.togkontrolloer.activities;
 
 import java.util.ArrayList;
-
 import kea.togkontrolloer.adapters.StationSpinnerAdapter;
+import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 import kea.togkontrolloer.async.MainSpotDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Station;
@@ -46,9 +46,31 @@ public class MainSpotActivity extends Activity {
         tv.setText("SPOTTING");
         
         
+        /*RequestHelp.setContext(this);
+        if(RequestHelp.fileExists("trainlines.json")){
+        	setTrainLines(RequestHelp.getTrainLines());
+        	Spinner trainLineSpinner = (Spinner) findViewById(R.id.trainLinesSpinner);
+    		TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(this, getTrainLines());
+    		trainLineSpinner.setAdapter(trainLineAdapter);
+        }*/
+        
         // GET DATA
         MainSpotDownloadTask mainSpotDownloadTask = new MainSpotDownloadTask(this);
         mainSpotDownloadTask.execute();
+        
+        /*try{
+        	Log.d("trainlines.json", "is "+RequestHelp.fileExists("trainlines.json"));
+        }catch(Exception e){
+        	Log.e("trainline problem", "problem: "+e.toString());
+        }
+        
+        try{
+        	trainLines = RequestHelp.getTrainLines();
+        }catch(Exception e){
+        	Log.e("trainline problem", "problem: "+e.toString());
+        }*/
+        
+        
         
         
         // TrainlineSpinner On item selected
