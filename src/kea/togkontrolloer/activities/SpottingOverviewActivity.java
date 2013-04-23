@@ -20,6 +20,8 @@ public class SpottingOverviewActivity extends Activity {
 	private ListView spottingOverview ;  
 	private ArrayAdapter<String> listAdapter ;  
 	ImageButton favoritBtn;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,15 @@ public class SpottingOverviewActivity extends Activity {
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_spotting_overview);
         
+        // Getting passed variables from OverviewActivity
+        Bundle extras = getIntent().getExtras();
+        int trainLineId = extras.getInt("trainLineId");
+
      // Find the ListView resource.   
         spottingOverview = (ListView) findViewById( R.id.spottingOverview );  
         
      // Create and populate a List of planet names.  
-        String[] planets = new String[] { "Klampenborg", "Charlottenlund"};    
+        String[] planets = new String[] {"Charlottenlund"};    
         ArrayList<String> planetList = new ArrayList<String>();  
         planetList.addAll( Arrays.asList(planets) );  
           

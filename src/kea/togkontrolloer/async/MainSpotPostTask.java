@@ -32,24 +32,26 @@ public class MainSpotPostTask extends AsyncTask<Void, Integer, Boolean> {
 		// TODO Auto-generated method stub
 		boolean success = true;
 		RequestHelp.setContext(activity);
-		if(trainLineId == 0 && toStationId == 0){
-			try{
-				RequestHelp.postSpotting("http://cfrimodt.dk/test/ticket-dodger/?do=setSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12&userId="+this.userId+"&fromStationId="+this.fromStationId);
+		if(doPost){
+			if(trainLineId == 0 && toStationId == 0){
+				try{
+					RequestHelp.postSpotting("http://cfrimodt.dk/test/ticket-dodger/?do=setSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12&userId="+this.userId+"&fromStationId="+this.fromStationId);
+				}
+				catch(Exception e){
+					Log.e("Posting spotting", "Could not post station spotting");
+				}
 			}
-			catch(Exception e){
-				Log.e("Posting spotting", "Could not post station spotting");
-			}
-		}
-		else{
-			try{
-				RequestHelp.postSpotting("http://cfrimodt.dk/test/ticket-dodger/?do=setSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12&userId="+this.userId+"&fromStationId="+this.fromStationId+"&toStationId="+this.toStationId+"&lineId="+this.trainLineId);
+			else{
+				try{
+					RequestHelp.postSpotting("http://cfrimodt.dk/test/ticket-dodger/?do=setSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12&userId="+this.userId+"&fromStationId="+this.fromStationId+"&toStationId="+this.toStationId+"&lineId="+this.trainLineId);
 
-			}
-			catch(Exception e){
-				Log.e("Posting spotting", "Could not post train spotting");
+				}
+				catch(Exception e){
+					Log.e("Posting spotting", "Could not post train spotting");
+				}
 			}
 		}
-		
+	
 		publishProgress(100);
 		return success;
 	}

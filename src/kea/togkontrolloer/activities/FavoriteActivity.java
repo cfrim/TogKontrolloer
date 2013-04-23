@@ -3,8 +3,9 @@ package kea.togkontrolloer.activities;
 import java.util.ArrayList;
 
 import kea.togkontrolloer.R;
-import kea.togkontrolloer.adapters.CustomListViewItem;
-import kea.togkontrolloer.adapters.ListImageAdapter;
+import kea.togkontrolloer.adapters.TrainLineListAdapter;
+import kea.togkontrolloer.models.CustomListViewItem;
+import kea.togkontrolloer.models.TrainLine;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,16 +34,16 @@ public class FavoriteActivity extends Activity {
     	
     	ListView favoriteListView = (ListView)findViewById(R.id.favoritesList);
     	
-    	ArrayList<CustomListViewItem> favoriteList = new ArrayList<CustomListViewItem>();
+    	ArrayList<TrainLine> favoriteList = new ArrayList<TrainLine>();
         
-    	CustomListViewItem theItemObject = new CustomListViewItem(1, "Klampenborg", R.drawable.c);
+    	TrainLine theItemObject = new TrainLine(1, "", "Klampenborg", "F.png", null);
         favoriteList.add(theItemObject);
         
-        CustomListViewItem theItemObject1 = new CustomListViewItem(1, "Lortenborg", R.drawable.a);
+        TrainLine theItemObject1 = new TrainLine(1, "", "Lortenborg", "F.png", null);
         favoriteList.add(theItemObject1);
         
         
-        ListImageAdapter adapter = new ListImageAdapter(this, favoriteList);
+        TrainLineListAdapter adapter = new TrainLineListAdapter(this, favoriteList);
      
         favoriteListView.setAdapter(adapter);
 		

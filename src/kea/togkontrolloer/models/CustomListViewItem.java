@@ -1,4 +1,4 @@
-package kea.togkontrolloer.adapters;
+package kea.togkontrolloer.models;
 
 public class CustomListViewItem {
 	

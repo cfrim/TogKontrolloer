@@ -3,8 +3,9 @@ package kea.togkontrolloer.activities;
 import java.util.ArrayList;
 
 import kea.togkontrolloer.R;
-import kea.togkontrolloer.adapters.CustomListViewItem;
-import kea.togkontrolloer.adapters.ListImageAdapter;
+import kea.togkontrolloer.adapters.TrainLineListAdapter;
+import kea.togkontrolloer.models.CustomListViewItem;
+import kea.togkontrolloer.models.TrainLine;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,12 +34,12 @@ public class OverviewActivity extends Activity {
      // Create and populate a List of planet names.  
         String[] planets = new String[] { "Klampenborg", "Ballerup", "Hillerød", "Holte",  
                                           "Ny Ellebjerg", "Frederikssund", "Østerbro", "Nøreport", "Vesterport"};    
-        ArrayList<CustomListViewItem> planetList = new ArrayList<CustomListViewItem>();  
+        ArrayList<TrainLine> planetList = new ArrayList<TrainLine>();  
        
         
         for(int i=0;i<planets.length; i++){
-        	CustomListViewItem item = new CustomListViewItem(1, planets[i], R.drawable.b);
-        	planetList.add(item); 
+        	TrainLine tLine = new TrainLine(1, "", planets[i], "F.png", null);
+        	planetList.add(tLine); 
         }
            
         // Create ArrayAdapter using the planet list.
@@ -49,22 +50,19 @@ public class OverviewActivity extends Activity {
         // Otherwise an exception will occur.  
           
         // Set the ArrayAdapter as the ListView's adapter. 
-        ListImageAdapter listAdapter = new ListImageAdapter(this, planetList);
+        TrainLineListAdapter listAdapter = new TrainLineListAdapter(this, planetList);
         trainlinesOverview.setAdapter(listAdapter);
         
         trainlinesOverview.setOnItemClickListener(new OnItemClickListener() {
 
             	public void onItemClick(AdapterView<?> parent, View view,
             		      int position, long id) {
-            		    switch(position)
-            		    {
-            		       case 0:  Intent newActivity = new Intent(view.getContext(), SpottingOverviewActivity.class);     
-            		                startActivity(newActivity);
-            		                break;
-            		       case 1:  Intent newActivity2 = new Intent(view.getContext(), SpottingOverviewActivity.class);     
-            		                startActivity(newActivity2);
-            		                break;
-            		    }
+
+            		   Intent newActivity = new Intent(view.getContext(), SpottingOverviewActivity.class).
+            				   putExtra("trainLineId", 5);     
+            		   startActivity(newActivity);
+
+
             }
         });
         
