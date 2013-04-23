@@ -73,6 +73,9 @@ public class TrainLineListAdapter extends BaseAdapter{
         else if(trainLine.getIcon().equals("F.png")){
         	thumb_image.setImageResource(R.drawable.f);
         }
+        else if(trainLine.getIcon().equals("H.png")){
+        	thumb_image.setImageResource(R.drawable.h);
+        }
         Log.i("Trainline icon outside", trainLine.getIcon());
         //imageLoader.DisplayImage(song.get(CustomizedListView.KEY_THUMB_URL), thumb_image);
         return vi;
