@@ -136,36 +136,36 @@ public class MainSpotActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				TrainLine selectedTrainLine = (TrainLine) trainLinesSpinner.getSelectedItem();
+				Station selectedFromStation = (Station) fromStationsSpinner.getSelectedItem();
+				int trainLineId = selectedTrainLine.getId();
+				int fromStationId = selectedFromStation.getId();
+				Station toStation = null;
+				int toStationId;
+				
 				if(IsInTrain){
-					TrainLine selectedTrainLine = (TrainLine) trainLinesSpinner.getSelectedItem();
-					Station selectedFromStation = (Station) fromStationsSpinner.getSelectedItem();
-					int trainLineId = selectedTrainLine.getId();
-					int fromStationId = selectedFromStation.getId();
-					Station toStation = null;
 					ArrayList<Station> selectedTrainLineStations = selectedTrainLine.getStations();
-
+					// Iteration through stations of the selected trainline in order to get 
 					for (int i = 0; i <= selectedTrainLineStations.size()-1; i++) {
 					    if (selectedTrainLineStations.get(i).getId() == fromStationId){
 					    	if(i == selectedTrainLineStations.size()-1){
-					    		toStation = null;	
+					    		// Setting toStation to be the same as fromStation, if the last station is selected
+					    		toStation = selectedFromStation;	
 					    	}
 					    	else{
+					    		// Setting toStation to be the next station on the list
 					    		toStation = selectedTrainLineStations.get(i+1);
 					    	}
-					    	try{
-					    		Toast.makeText(activity, "Next station is: " + toStation.getName(), Toast.LENGTH_LONG).show();
-					    	}
-					    	catch(Exception e){
-					    		Log.e("Printing next station", "Could not print next station");
-					    	}
-
 					    	break;  
 					    }
-					  
 					}
+					// Setting toStationId
+					toStationId = toStation.getId();
+					// Make spotting ************************************					
 				}
 				else{
-					
+					trainLineId = (Integer) null;
+					// Make spotting ************************************	
 				}
 				
 				
