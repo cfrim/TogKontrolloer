@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import kea.togkontrolloer.R;
 
 import kea.togkontrolloer.adapters.StationSpinnerAdapter;
+import kea.togkontrolloer.adapters.TrainLineListAdapter;
 import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
-import kea.togkontrolloer.async.MainSpotDownloadTask;
+
 import kea.togkontrolloer.async.OverviewDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Spotting;
@@ -54,28 +55,7 @@ public class OverviewActivity extends Activity {
      // Find the ListView resource.   
         trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );  
         
-     // Create and populate a List of planet names.  
-        String[] planets = new String[] { "Klampenborg", "Ballerup", "Hillerød", "Holte",  
-                                          "Ny Ellebjerg", "Frederikssund", "Østerbro", "Nøreport", "Vesterport"};    
-        ArrayList<TrainLine> planetList = new ArrayList<TrainLine>();  
-       
-        
-        for(int i=0;i<planets.length; i++){
-        	TrainLine tLine = new TrainLine(1, "", planets[i], "F.png", null);
-        	planetList.add(tLine); 
-        }
-           
-        // Create ArrayAdapter using the planet list.
-        
-          
-        // Add more planets. If you passed a String[] instead of a List<String>   
-        // into the ArrayAdapter constructor, you must not add more items.   
-        // Otherwise an exception will occur.  
-          
-        // Set the ArrayAdapter as the ListView's adapter. 
-        TrainLineListAdapter listAdapter = new TrainLineListAdapter(this, planetList);
-        trainlinesOverview.setAdapter(listAdapter);
-        
+    
         trainlinesOverview.setOnItemClickListener(new OnItemClickListener() {
 
             	public void onItemClick(AdapterView<?> parent, View view,
@@ -121,6 +101,9 @@ public class OverviewActivity extends Activity {
 
 	public void setTrainLines(ArrayList<TrainLine> trainLines) {
 		this.trainLines = trainLines;
+		TrainLineListAdapter tAdapter = new TrainLineListAdapter(this, trainLines);
+		trainlinesOverview.setAdapter(tAdapter);
+		
 	}
 
 	public ArrayList<Spotting> getSpottings() {
