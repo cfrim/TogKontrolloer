@@ -38,6 +38,7 @@ public class RequestHelp {
 	private static String filenameTrainLines = "trainlines.json";
 	private static String filenameStations = "stations.json";
 	private static String filenameUser = "user.json";
+	private static String filenameSpottings = "spottings.json";
 	
 	public static void setContext(Context context){
 		RequestHelp.context = context;
@@ -368,16 +369,72 @@ public class RequestHelp {
 				setLocalJSON(filenameUser, requestJSON);
 			}
 		}
+		
 		if(requestJSON == ""){
 			return 0;
-		}
-		else{
+		}else{
 			Request request = getRequest(requestJSON);
 			JsonElement jOut = request.getOut();
 			userId = jOut.getAsJsonObject();
 			
 			return userId.get("id").getAsInt();
 		}
+	}
+		
+	public static ArrayList<Spotting> getSpottings(){
+		
+		if(isConnected() && (!fileExists(filenameSpottings) || MathHelp.getTimeDiff("now", fileTimestamp(filenameSpottings)) >= 5 )){
+			
+			return getSpottings(true);
+			
+		}else{
+			
+			return getSpottings(false);
+			
+		}
+		
+	}
+	
+	public static ArrayList<Spotting> getSpottings(boolean getOnline){
+		
+		ArrayList<Spotting> spottings = new ArrayList<Spotting>();
+		
+		String requestJSON;
+		
+		if(getOnline){
+			
+			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+			setLocalJSON(filenameSpottings, requestJSON);
+			
+		}else{
+			
+			requestJSON = getLocalJSON(filenameTrainLines);
+			
+		}
+		
+		if(requestJSON != ""){
+			
+			Request request = getRequest(requestJSON);
+			try{
+				
+				JsonArray spottingsJSON = request.getOut().getAsJsonArray();
+				
+				int count = spottingsJSON.size();
+				for(int i = 0; i < count; i++){
+					
+					Spotting spotting = gson.fromJson(spottingsJSON.get(i), Spotting.class);
+					
+					spottings.add(spotting);
+					
+				}
+				
+			}catch(JsonSyntaxException e){
+				Log.e("getSpottings", e.toString());
+			}
+			
+		}
+		
+		return spottings;
 	}
 
 	public static String getFilenameTrainLines() {
@@ -394,6 +451,22 @@ public class RequestHelp {
 
 	public static void setFilenameStations(String filenameStations) {
 		RequestHelp.filenameStations = filenameStations;
+	}
+
+	public static String getFilenameSpottings() {
+		return filenameSpottings;
+	}
+
+	public static void setFilenameSpottings(String filenameSpottings) {
+		RequestHelp.filenameSpottings = filenameSpottings;
+	}
+
+	public static String getFilenameUser() {
+		return filenameUser;
+	}
+
+	public static void setFilenameUser(String filenameUser) {
+		RequestHelp.filenameUser = filenameUser;
 	}
 	
 }

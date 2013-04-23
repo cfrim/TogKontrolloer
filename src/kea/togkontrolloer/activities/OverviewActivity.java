@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import kea.togkontrolloer.R;
 import kea.togkontrolloer.adapters.CustomListViewItem;
 import kea.togkontrolloer.adapters.ListImageAdapter;
+import kea.togkontrolloer.adapters.StationSpinnerAdapter;
+import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
+import kea.togkontrolloer.async.MainSpotDownloadTask;
+import kea.togkontrolloer.async.OverviewDownloadTask;
+import kea.togkontrolloer.helpers.RequestHelp;
+import kea.togkontrolloer.models.Spotting;
+import kea.togkontrolloer.models.TrainLine;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,11 +21,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class OverviewActivity extends Activity {
 	
-	private ListView trainlinesOverview ;  
+	private ListView trainlinesOverview; 
+	private ArrayList<TrainLine> trainLines;
+	private ArrayList<Spotting> spottings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +36,20 @@ public class OverviewActivity extends Activity {
         // Use custom styling on title bar 
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_overview);
+        
+        RequestHelp.setContext(this);
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
+        	setTrainLines(RequestHelp.getTrainLines(false));
+        }
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameSpottings())){
+        	setSpottings(RequestHelp.getSpottings(false));
+        }
+        
+        // GET DATA
+        OverviewDownloadTask overviewDownloadTask = new OverviewDownloadTask(this);
+        overviewDownloadTask.execute();
         
      // Find the ListView resource.   
         trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );  
@@ -92,6 +116,22 @@ public class OverviewActivity extends Activity {
             }
 
         });
+	}
+
+	public ArrayList<TrainLine> getTrainLines() {
+		return trainLines;
+	}
+
+	public void setTrainLines(ArrayList<TrainLine> trainLines) {
+		this.trainLines = trainLines;
+	}
+
+	public ArrayList<Spotting> getSpottings() {
+		return spottings;
+	}
+
+	public void setSpottings(ArrayList<Spotting> spottings) {
+		this.spottings = spottings;
 	}
 
 }

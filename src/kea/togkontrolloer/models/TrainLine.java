@@ -10,6 +10,11 @@ public class TrainLine {
 	private String icon;
 	private ArrayList<Station> stations;
 	
+	public TrainLine(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	public TrainLine(int id, String name, String destination, String icon, ArrayList<Station> stations) {
 		
 		this.id = id;
@@ -18,12 +23,6 @@ public class TrainLine {
 		this.icon = icon;
 		this.stations = stations;
 		
-	}
-
-	public TrainLine(String name, int id) {
-		
-		this.name = name;
-		this.id = id;
 	}
 	
 	public int getId() {

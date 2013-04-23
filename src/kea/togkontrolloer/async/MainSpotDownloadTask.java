@@ -37,11 +37,11 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		
 		fetchedUserId = RequestHelp.getUserId();
 		
-		if(downloadTrainLines || downloadStations){
-			fetchedLines = RequestHelp.getTrainLines(true);
-			fetchedStations = RequestHelp.getStations();
-		}
-		publishProgress(100);
+		if(downloadTrainLines) fetchedLines = RequestHelp.getTrainLines(true);
+		publishProgress(50);
+		if(downloadStations) fetchedStations = RequestHelp.getStations(true);
+		publishProgress(50);
+
 		
 		return success;
 	}
@@ -83,20 +83,25 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
-		pDialog.dismiss();
 		
-		if(downloadTrainLines || downloadStations){
-			activity.setStations(fetchedStations);
+		if(downloadTrainLines){
 			activity.setTrainLines(fetchedLines);
 		
 			Spinner trainLineSpinner = (Spinner) activity.findViewById(kea.togkontrolloer.R.id.trainLinesSpinner);
 			TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(activity, activity.getTrainLines());
 			trainLineSpinner.setAdapter(trainLineAdapter);
 			
+		}
+		
+		if(downloadStations){
+			activity.setStations(fetchedStations);
+			
 			Spinner stationSpinner = (Spinner) activity.findViewById(kea.togkontrolloer.R.id.fromStationsSpinner);
         	StationSpinnerAdapter stationAdapter = new StationSpinnerAdapter(activity, activity.getStations());
         	stationSpinner.setAdapter(stationAdapter);
 		}
+		
+		pDialog.dismiss();
 		
 	}
 	
