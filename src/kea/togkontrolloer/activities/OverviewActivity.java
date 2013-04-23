@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import kea.togkontrolloer.R;
 
-import kea.togkontrolloer.adapters.TrainLineListAdapter;
-
+import kea.togkontrolloer.adapters.StationSpinnerAdapter;
+import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
+import kea.togkontrolloer.async.MainSpotDownloadTask;
 import kea.togkontrolloer.async.OverviewDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Spotting;
