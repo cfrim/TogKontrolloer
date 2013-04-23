@@ -8,6 +8,7 @@ import kea.togkontrolloer.adapters.ListImageAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +28,7 @@ public class FavoriteActivity extends Activity {
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
         TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
         tv.setText("FAVORITTER"); 
+        
 		
     	
     	ListView favoriteListView = (ListView)findViewById(R.id.favoritesList);
@@ -38,9 +40,10 @@ public class FavoriteActivity extends Activity {
         
         CustomListViewItem theItemObject1 = new CustomListViewItem(1, "Lortenborg", R.drawable.a);
         favoriteList.add(theItemObject1);
-
+        
         
         ListImageAdapter adapter = new ListImageAdapter(this, favoriteList);
+     
         favoriteListView.setAdapter(adapter);
 		
         

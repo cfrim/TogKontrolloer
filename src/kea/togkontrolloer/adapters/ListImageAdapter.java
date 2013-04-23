@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import kea.togkontrolloer.R;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class ListImageAdapter extends BaseAdapter{
         // Setting all values in listview
         //title.setText(item.title);
         title.setText(item.title);
+        title.setTextColor(Color.WHITE);
         thumb_image.setImageResource(item.image);
         //imageLoader.DisplayImage(song.get(CustomizedListView.KEY_THUMB_URL), thumb_image);
         return vi;

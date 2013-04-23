@@ -19,6 +19,11 @@
         <item name="android:windowTitleBackgroundStyle">@color/MenuColor</item>
     </style>
 
+    
+    <style name="CodeFont" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 </resources>
 
 

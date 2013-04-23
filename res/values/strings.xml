@@ -36,5 +36,7 @@
     <string name="img_overview">Oversigt knap</string>
     <string name="TogLinjer">Tog linjer:</string>
     <string name="empty_string"></string>
+    <color name="divider_dark">#262D37</color>
+    <color name="divider_light">#68727C</color>
 
 </resources>

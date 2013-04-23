@@ -48,13 +48,13 @@
        android:layout_marginTop="18dp"
        android:orientation="vertical" >
 
-       <ListView
+       <ListView style="@style/CodeFont"
            android:id="@+id/favoritesList"
            android:layout_width="fill_parent"
            android:layout_height="419dp"
-           android:divider="#b5b5b5"
+           android:divider="@color/divider_dark"
            android:dividerHeight="1dp"
-           android:listSelector="@drawable/list_selector" >
+           android:listSelector="@drawable/list_selector">
        </ListView>
 
     </LinearLayout>
