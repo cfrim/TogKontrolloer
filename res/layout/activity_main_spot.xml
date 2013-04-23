@@ -38,24 +38,6 @@
         android:scaleType="center"
         android:src="@drawable/ic_spot_l" />
 
-    <TextView
-        android:id="@+id/toStationText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/trainLinesSpinner"
-        android:layout_below="@+id/fromStationsSpinner"
-        android:text="Til station:(Udfyld kun i tog)"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white" />
-
-    <Spinner
-        android:id="@+id/toStationsSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toStationText"
-        android:layout_marginLeft="@dimen/marginLR"
-        android:layout_marginRight="@dimen/marginLR"
-        android:entries="@array/stations_array" />
 
     <Spinner
         android:id="@+id/fromStationsSpinner"
@@ -86,18 +68,6 @@
         android:layout_marginRight="@dimen/marginLR"
         android:entries="@array/trainLines_array" />
 
-    <Button
-        android:id="@+id/addSpot"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignLeft="@+id/fromStationsSpinner"
-        android:layout_alignRight="@+id/fromStationsSpinner"
-        android:layout_below="@+id/toStationsSpinner"
-        android:layout_marginTop="10dp"
-        android:background="@color/MenuColor"
-        android:textColor="@color/white"
-        android:text="Spot" />
-
     <TextView
         android:id="@+id/fromStationText"
         android:layout_width="wrap_content"
@@ -107,6 +77,18 @@
         android:layout_marginTop="30dp"
         android:text="Fra station:"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/addSpot"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_above="@+id/favorits"
+        android:layout_alignLeft="@+id/trainLinesSpinner"
+        android:layout_alignRight="@+id/fromStationsSpinner"
+        android:layout_marginBottom="18dp"
+        android:background="@color/MenuColor"
+        android:text="Spot"
         android:textColor="@color/white" />
 
 </RelativeLayout>

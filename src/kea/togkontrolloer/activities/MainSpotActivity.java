@@ -1,8 +1,8 @@
 package kea.togkontrolloer.activities;
 
 import java.util.ArrayList;
-
 import kea.togkontrolloer.adapters.StationSpinnerAdapter;
+import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 import kea.togkontrolloer.async.MainSpotDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Station;
@@ -18,19 +18,23 @@ import android.view.View;
 
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainSpotActivity extends Activity {
 	
 	private ArrayList<Station> stations;
 	private ArrayList<TrainLine> trainLines;
+	public boolean IsInTrain = false;
 
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         
         final Activity activity;
         activity = this;
@@ -46,22 +50,39 @@ public class MainSpotActivity extends Activity {
         tv.setText("SPOTTING");
         
         
+        RequestHelp.setContext(this);
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
+        	setTrainLines(RequestHelp.getTrainLines(false));
+        	Spinner trainLineSpinner = (Spinner) findViewById(R.id.trainLinesSpinner);
+    		TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(this, trainLines);
+    		trainLineSpinner.setAdapter(trainLineAdapter);
+        }
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameStations())){
+        	setStations(RequestHelp.getStations(false));
+        	Spinner stationSpinner = (Spinner) findViewById(R.id.fromStationsSpinner);
+        	StationSpinnerAdapter stationAdapter = new StationSpinnerAdapter(this, stations);
+        	stationSpinner.setAdapter(stationAdapter);
+        }
+        
         // GET DATA
         MainSpotDownloadTask mainSpotDownloadTask = new MainSpotDownloadTask(this);
         mainSpotDownloadTask.execute();
         
         
+        
+        
         // TrainlineSpinner On item selected
         // Get GUI elements
         final TextView fromStationText = (TextView)findViewById(R.id.fromStationText);
-        final TextView toStationText = (TextView)findViewById(R.id.toStationText);
         
-        Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
+        final Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
         final Spinner fromStationsSpinner = (Spinner)findViewById(R.id.fromStationsSpinner);
-        final Spinner toStationsSpinner = (Spinner)findViewById(R.id.toStationsSpinner);
+       
         
         trainLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        	
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
@@ -70,20 +91,25 @@ public class MainSpotActivity extends Activity {
 					t = (TrainLine) parent.getItemAtPosition(position);
 					// If the selected trainline id is 0 (NOT SELECTED)
 					if(t.getId() == 0){
-						toStationText.setVisibility(View.GONE);
-						toStationsSpinner.setVisibility(View.GONE);
-						fromStationText.setText("Vælg station");
+						IsInTrain = false;
+						fromStationText.setText("V¾lg station");
 						
 						// Get all stations
 						ArrayList<Station> stationsList = RequestHelp.getStations();
+						// Set adapter
 						StationSpinnerAdapter stationsSpinnerAdapter = new StationSpinnerAdapter(activity, stationsList);
 						fromStationsSpinner.setAdapter(stationsSpinnerAdapter);
 						
 					}
 					else{
-						toStationText.setVisibility(View.VISIBLE);
-						toStationsSpinner.setVisibility(View.VISIBLE);
+						IsInTrain = true;
+
 						fromStationText.setText("Fra station:");
+						
+						ArrayList<Station> trainLineStationsList = t.getStations();
+						StationSpinnerAdapter stationsSpinnerAdapter = new StationSpinnerAdapter(activity, trainLineStationsList);
+						fromStationsSpinner.setAdapter(stationsSpinnerAdapter);
+
 					}
 				}
 				catch(Exception e){
@@ -99,6 +125,47 @@ public class MainSpotActivity extends Activity {
 			}
         	
         });
+        
+        Button spotButton = (Button) findViewById(R.id.addSpot);
+        spotButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				TrainLine selectedTrainLine = (TrainLine) trainLinesSpinner.getSelectedItem();
+				Station selectedFromStation = (Station) fromStationsSpinner.getSelectedItem();
+				int trainLineId = selectedTrainLine.getId();
+				int fromStationId = selectedFromStation.getId();
+				Station toStation = null;
+				int toStationId;
+				
+				if(IsInTrain){
+					ArrayList<Station> selectedTrainLineStations = selectedTrainLine.getStations();
+					// Iteration through stations of the selected trainline in order to get 
+					for (int i = 0; i <= selectedTrainLineStations.size()-1; i++) {
+					    if (selectedTrainLineStations.get(i).getId() == fromStationId){
+					    	if(i == selectedTrainLineStations.size()-1){
+					    		// Setting toStation to be the same as fromStation, if the last station is selected
+					    		toStation = selectedFromStation;	
+					    	}
+					    	else{
+					    		// Setting toStation to be the next station on the list
+					    		toStation = selectedTrainLineStations.get(i+1);
+					    	}
+					    	break;  
+					    }
+					}
+					// Setting toStationId
+					toStationId = toStation.getId();
+					// Make spotting ************************************					
+				}
+				else{
+					trainLineId = (Integer) null;
+					// Make spotting ************************************	
+				}
+				
+				
+			}
+		});
         
         
         // NAVIGATION EVENTS

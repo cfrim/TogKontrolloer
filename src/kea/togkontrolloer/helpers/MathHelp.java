@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.util.Log;
+
 public class MathHelp {
 
 	public static double getDistance(double lat1, double lon1, double lat2, double lon2){
@@ -49,6 +51,8 @@ public class MathHelp {
 		*/
 		
 		long diffOnlyMinutes = diff / (60 * 1000);
+		
+		if(diffOnlyMinutes < 0) diffOnlyMinutes *= -1;
 		
 		return diffOnlyMinutes;
 		
