@@ -4,10 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import kea.togkontrolloer.R;
+import kea.togkontrolloer.adapters.SpottingListAdapter;
+import kea.togkontrolloer.adapters.TrainLineListAdapter;
+import kea.togkontrolloer.async.OverviewDownloadTask;
+import kea.togkontrolloer.async.SpottingOverviewDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
+import kea.togkontrolloer.helpers.SpotHelp;
+import kea.togkontrolloer.models.Favorite;
+import kea.togkontrolloer.models.OverviewListItem;
+import kea.togkontrolloer.models.Spotting;
+import kea.togkontrolloer.models.TrainLine;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -18,12 +28,16 @@ import android.widget.TextView;
 public class SpottingOverviewActivity extends Activity {
 
 	private boolean showFavorites;
+	private boolean isFavorite = false;
 	private int line_id;
-	private ListView spottingOverview ;  
-	private ArrayAdapter<String> listAdapter ;  
-	ImageButton favoritBtn;
-	
-	
+	private ListView spottingOverview;
+	private ArrayAdapter<String> listAdapter;
+	private ArrayList<Favorite> favoriteTrainLines;
+	private ArrayList<TrainLine> trainLines;
+	private ArrayList<Spotting> spottings;
+	private ArrayList<OverviewListItem> listItems;
+	private TrainLine selectedTrainLine;
+	private ArrayList<Spotting> relevantSpottings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +47,8 @@ public class SpottingOverviewActivity extends Activity {
 		showFavorites = bundle.getBoolean("showFavorites");
 		line_id = bundle.getInt("line_id");
 		
+		RequestHelp.setContext(this);
+		
         // Use custom styling on title bar 
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_spotting_overview);
@@ -40,25 +56,28 @@ public class SpottingOverviewActivity extends Activity {
      // Find the ListView resource.   
         spottingOverview = (ListView) findViewById( R.id.spottingOverview );  
         
-     // Create and populate a List of planet names.  
-        String[] planets = new String[] {"Charlottenlund"};    
-        ArrayList<String> planetList = new ArrayList<String>();  
-        planetList.addAll( Arrays.asList(planets) );  
-          
-        // Create ArrayAdapter using the planet list.  
-        listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, planetList);  
-          
-        // Add more planets. If you passed a String[] instead of a List<String>   
-        // into the ArrayAdapter constructor, you must not add more items.   
-        // Otherwise an exception will occur.  
-        listAdapter.add( "Hellerup" );  
-          
-        // Set the ArrayAdapter as the ListView's adapter.  
-        spottingOverview.setAdapter( listAdapter );
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameFavorites())){
+        	favoriteTrainLines = RequestHelp.getFavorites();
+        }
+        
+        Log.i("localget", "inside get trainlines");
+        setTrainLines(RequestHelp.getTrainLines(false));
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameSpottings())){
+        	Log.i("localget", "inside get spottings");
+        	setSpottings(RequestHelp.getSpottings(false));
+        }
+        
+        updateList();
+        
+        // GET DATA
+        SpottingOverviewDownloadTask spottingOverviewDownloadTask = new SpottingOverviewDownloadTask(this);
+        spottingOverviewDownloadTask.execute();
         
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title_back);
         TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
-        tv.setText("STATIONER"); 
+        tv.setText("SPOTTINGS"); 
         // Back button
         ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +128,16 @@ public class SpottingOverviewActivity extends Activity {
 		}
               
         // Favorit button
-        favoritBtn = (ImageButton) findViewById(R.id.favoritBtn);
+        ImageButton favoritBtn = (ImageButton) findViewById(R.id.favoritBtn);
+        
+        if(isFavorite){
+        	favoritBtn.setImageResource(R.drawable.ic_favorit_added);
+			favoritBtn.setTag("No_add");
+        }else{
+        	favoritBtn.setImageResource(R.drawable.ic_favorit_empty);
+			favoritBtn.setTag("Add");
+        }
+        
         favoritBtn.setOnClickListener(favoritBtnHandler);
 	}
 
@@ -134,5 +162,76 @@ public class SpottingOverviewActivity extends Activity {
 				}	
 		}
     };
+    
+    	public void updateList(){
+    		
+    		int count = trainLines.size();
+    		for(int i = 0; i < count; i++){
+    			
+    			TrainLine trainLine = trainLines.get(i);
+    			
+    			if(trainLine.getId() == line_id){
+    				
+    				if(favoriteTrainLines != null){
+    					int count2 = favoriteTrainLines.size();
+        				for(int i2 = 0; i2 < count2; i2++){
+        					
+        					if(trainLine.getId() == favoriteTrainLines.get(i2).getId())
+        					{
+        						isFavorite = true;
+        						break;
+        					}
+        					
+        				}
+    				}
+    				
+    				selectedTrainLine = trainLine;
+    				relevantSpottings = new ArrayList<Spotting>(); 
+    				if(spottings != null) relevantSpottings = SpotHelp.spotMatches(selectedTrainLine, spottings);
+    				break;
+    			}
+    			
+    		}
+    		
+    		TextView title = (TextView) findViewById(R.id.headerOverview);
+    		
+    		title.setText(selectedTrainLine.getName()+" mod "+selectedTrainLine.getDestination());
+    		
+    		SpottingListAdapter spotAdapter = new SpottingListAdapter(this, relevantSpottings);
+    		spottingOverview.setAdapter(spotAdapter);
+    		
+    	}
+
+		public ArrayList<Favorite> getFavoriteTrainLines() {
+			return favoriteTrainLines;
+		}
+
+		public void setFavoriteTrainLines(ArrayList<Favorite> favoriteTrainLines) {
+			this.favoriteTrainLines = favoriteTrainLines;
+		}
+
+		public ArrayList<TrainLine> getTrainLines() {
+			return trainLines;
+		}
+
+		public void setTrainLines(ArrayList<TrainLine> trainLines) {
+			this.trainLines = trainLines;
+		}
+
+		public ArrayList<Spotting> getSpottings() {
+			return spottings;
+		}
+
+		public void setSpottings(ArrayList<Spotting> spottings) {
+			this.spottings = spottings;
+		}
+
+		public ArrayList<OverviewListItem> getListItems() {
+			return listItems;
+		}
+
+		public void setListItems(ArrayList<OverviewListItem> listItems) {
+			this.listItems = listItems;
+		}
     
 }
