@@ -344,10 +344,7 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 			
 			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
 			Request request = getRequest(requestJSON); 
-			
-			request.getOut();
-			
-			//setLocalJSON(filenameTrainLines, requestJSON);
+			setLocalJSON(filenameTrainLines, requestJSON);
 			
 		}else{
 			
