@@ -39,6 +39,7 @@ public class SpottingOverviewActivity extends Activity {
 	private ArrayList<OverviewListItem> listItems;
 	private TrainLine selectedTrainLine;
 	private ArrayList<Spotting> relevantSpottings;
+	private boolean doRefresh = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +128,24 @@ public class SpottingOverviewActivity extends Activity {
 
         });
 		}
+		
+		ImageButton refreshBtn = (ImageButton) findViewById(R.id.refreshBtn);
+		
+		final SpottingOverviewActivity tempActivity = this;
+		refreshBtn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				Log.i("Activity", tempActivity.toString());
+				
+				doRefresh = true;
+				
+				SpottingOverviewDownloadTask refreshSpottings = new SpottingOverviewDownloadTask(tempActivity);
+				refreshSpottings.execute();
+				
+			}
+		});
               
         // Favorit button
         ImageButton favoritBtn = (ImageButton) findViewById(R.id.favoritBtn);
@@ -256,6 +275,14 @@ public class SpottingOverviewActivity extends Activity {
 
 		public void setListItems(ArrayList<OverviewListItem> listItems) {
 			this.listItems = listItems;
+		}
+
+		public boolean isDoRefresh() {
+			return doRefresh;
+		}
+
+		public void setDoRefresh(boolean doRefresh) {
+			this.doRefresh = doRefresh;
 		}
     
 }

@@ -77,6 +77,12 @@ public class SpottingOverviewDownloadTask extends AsyncTask<Void, Integer, Boole
 			downloadSpottings = false;
 		}
 		
+		if(activity.isDoRefresh()){
+			activity.setDoRefresh(false);
+			downloadTrainLines = true;
+			downloadSpottings = true;
+		}
+		
 		Log.i("download trainlines", String.valueOf(downloadTrainLines));
 		
 		pDialog = new ProgressDialog(activity);
