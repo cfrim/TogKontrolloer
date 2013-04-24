@@ -528,7 +528,7 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 			
 		}else{
 			
-			requestJSON = getLocalJSON(filenameTrainLines);
+			requestJSON = getLocalJSON(filenameSpottings);
 			
 		}
 		
