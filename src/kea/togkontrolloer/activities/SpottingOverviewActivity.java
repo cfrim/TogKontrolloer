@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -188,17 +189,40 @@ public class SpottingOverviewActivity extends Activity {
     				selectedTrainLine = trainLine;
     				relevantSpottings = new ArrayList<Spotting>(); 
     				if(spottings != null) relevantSpottings = SpotHelp.spotMatches(selectedTrainLine, spottings);
+    				
+    				TextView titleView = (TextView) findViewById(R.id.title);
+    	    		titleView.setText(selectedTrainLine.getDestination());
+    	    		
+    	    		ImageView thumb_image = (ImageView) findViewById(R.id.list_image);
+    	    		if(selectedTrainLine.getIcon().equals("A.png")){
+    	            	thumb_image.setImageResource(R.drawable.a);
+    	            }
+    	            else if(selectedTrainLine.getIcon().equals("B.png")){
+    	            	thumb_image.setImageResource(R.drawable.b);
+    	            }
+    	            else if(selectedTrainLine.getIcon().equals("BX.png")){
+    	            	thumb_image.setImageResource(R.drawable.bx);
+    	            }
+    	            else if(selectedTrainLine.getIcon().equals("C.png")){
+    	            	thumb_image.setImageResource(R.drawable.c);
+    	            }
+    	            else if(selectedTrainLine.getIcon().equals("E.png")){
+    	            	thumb_image.setImageResource(R.drawable.e);
+    	            }
+    	            else if(selectedTrainLine.getIcon().equals("F.png")){
+    	            	thumb_image.setImageResource(R.drawable.f);
+    	            }
+    	            else if(selectedTrainLine.getIcon().equals("H.png")){
+    	            	thumb_image.setImageResource(R.drawable.h);
+    	            }
+    	    		
+    	    		SpottingListAdapter spotAdapter = new SpottingListAdapter(this, relevantSpottings);
+    	    		spottingOverview.setAdapter(spotAdapter);
+    				
     				break;
     			}
     			
     		}
-    		
-    		TextView title = (TextView) findViewById(R.id.headerOverview);
-    		
-    		title.setText(selectedTrainLine.getName()+" mod "+selectedTrainLine.getDestination());
-    		
-    		SpottingListAdapter spotAdapter = new SpottingListAdapter(this, relevantSpottings);
-    		spottingOverview.setAdapter(spotAdapter);
     		
     	}
 
