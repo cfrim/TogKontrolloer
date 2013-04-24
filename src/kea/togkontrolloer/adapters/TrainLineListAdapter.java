@@ -52,7 +52,6 @@ public class TrainLineListAdapter extends BaseAdapter{
         // Setting all values in listview
         //title.setText(item.title);
         title.setText(trainLine.getDestination());
-        title.setTextColor(Color.WHITE);
         
         
         if(trainLine.getIcon().equals("A.png")){
