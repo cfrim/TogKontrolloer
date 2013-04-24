@@ -45,15 +45,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/favorits"
-        android:layout_below="@+id/backBtn"
+        android:layout_below="@+id/headerOverview"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/marginLR"
         android:layout_marginRight="@dimen/marginLR"
         android:cacheColorHint="@color/bgColor"
         android:divider="@color/divider_dark"
         android:dividerHeight="1dp"
-        android:textColor="@color/white"
-        android:listSelector="@drawable/list_selector" >
+        android:listSelector="@drawable/list_selector"
+        android:textColor="@color/white" >
 
     </ListView>
 
@@ -63,18 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="13dp"
-        android:layout_toRightOf="@+id/backBtn"
         android:text="C -> Klamenborg:"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white" />
-
-    <ImageButton
-        android:id="@+id/backBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/spottingOverview"
-        android:background="@color/bgColor"
-        android:src="@drawable/ic_backsmall" />
+        android:textColor="@color/white" android:layout_alignLeft="@+id/spottingOverview"/>
 
     <ImageButton
         android:id="@+id/favoritBtn"

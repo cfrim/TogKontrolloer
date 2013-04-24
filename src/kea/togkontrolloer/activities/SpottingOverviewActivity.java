@@ -56,9 +56,9 @@ public class SpottingOverviewActivity extends Activity {
         // Set the ArrayAdapter as the ListView's adapter.  
         spottingOverview.setAdapter( listAdapter );
         
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title_back);
         TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
-        tv.setText("OVERSIGT - Spottings på stationer"); 
+        tv.setText("STATIONER"); 
         // Back button
         ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {

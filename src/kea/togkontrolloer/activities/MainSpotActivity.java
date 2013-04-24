@@ -43,7 +43,7 @@ public class MainSpotActivity extends Activity {
         
         // SET WINDOW TITLE
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-        final TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
+        final TextView tv = (TextView) findViewById(R.id.dynamicTitleView);
         tv.setText("SPOTTING");
         
         // TrainlineSpinner On item selected
