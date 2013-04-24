@@ -29,10 +29,12 @@ public class MainSpotPostTask extends AsyncTask<Void, Integer, Boolean> {
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-		// TODO Auto-generated method stub
+		
 		boolean success = true;
 		
 		this.userId = RequestHelp.getUserId();
+		
+		if(userId == 0) doPost = false;
 		
 		if(doPost){
 			if(trainLineId == 0 && toStationId == 0){
@@ -61,39 +63,47 @@ public class MainSpotPostTask extends AsyncTask<Void, Integer, Boolean> {
 
 	@Override
 	protected void onPreExecute() {
-		// TODO Auto-generated method stub
 		super.onPreExecute();
 		
 		RequestHelp.setContext(activity);
-		if(RequestHelp.isConnected() && userId != 0){
-			doPost = true;
-			pDialog = new ProgressDialog(activity);
-			
-			pDialog.setMessage("Sender spotting");
-			pDialog.setIndeterminate(false);
-			pDialog.setMax(100);
-			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		
+		doPost = true;
+		pDialog = new ProgressDialog(activity);
+		
+		pDialog.setMessage("Sender spotting");
+		pDialog.setIndeterminate(false);
+		pDialog.setMax(100);
+		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		
+		if(RequestHelp.isConnected()){
 			pDialog.show();
-			
 		}
 		
 	}
 
 	@Override
 	protected void onPostExecute(Boolean result) {
-		// TODO Auto-generated method stub
 		super.onPostExecute(result);
 		pDialog.dismiss();
-		Toast successToast = Toast.makeText(this.activity, "Spotting blev sendt", Toast.LENGTH_SHORT);
+		
+		Toast successToast;
+		if(doPost){
+			successToast = Toast.makeText(this.activity, "Spotting blev sendt", Toast.LENGTH_SHORT);
+		}else{
+			successToast = Toast.makeText(this.activity, "Spotting blev ikke sendt", Toast.LENGTH_SHORT);
+		}
+		
+		
 		successToast.show();
 	}
 
 
 	@Override
 	protected void onProgressUpdate(Integer... progress) {
-		// TODO Auto-generated method stub
+		
 		super.onProgressUpdate(progress);
 		pDialog.setProgress(progress[0]);
+		
 	}
 	
 	

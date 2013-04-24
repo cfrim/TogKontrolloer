@@ -50,10 +50,8 @@ public class OverviewActivity extends Activity {
         	favoriteTrainLines = RequestHelp.getFavorites();
         }
         
-        if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
-        	Log.i("localget", "inside get trainlines");
-        	setTrainLines(RequestHelp.getTrainLines(false));
-        }
+        Log.i("localget", "inside get trainlines");
+        setTrainLines(RequestHelp.getTrainLines(false));
         
         if(RequestHelp.fileExists(RequestHelp.getFilenameSpottings())){
         	Log.i("localget", "inside get spottings");
