@@ -87,7 +87,7 @@
         android:layout_alignLeft="@+id/trainLinesSpinner"
         android:layout_alignRight="@+id/fromStationsSpinner"
         android:layout_marginBottom="18dp"
-        android:background="@drawable/round_corners"
+        android:background="@drawable/btn_click_effect"
         android:textStyle="bold"
         android:src="@drawable/spot_button" 
         android:textColor="@color/white" />

@@ -42,5 +42,6 @@
 
     <string name="title_activity_splash">SplashActivity</string>
     <color name="red">#CA5651</color>
+    <color name="redDark">#B94B49</color>
 
 </resources>
