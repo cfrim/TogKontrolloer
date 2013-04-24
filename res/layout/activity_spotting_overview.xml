@@ -54,15 +54,14 @@
     <LinearLayout android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="3dip"
-        android:layout_alignParentLeft="true"
+        android:padding="5dip"
         android:layout_marginRight="5dip">
- 
+
         <ImageView
             android:id="@+id/list_image"
             android:layout_width="30dip"
             android:layout_height="30dip"
-            android:src="@drawable/a"/>
+            android:src="@drawable/a" />
  
     </LinearLayout>
 
@@ -70,28 +69,27 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="9dp"
+        android:layout_alignBottom="@+id/favoritBtn"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Farum"
         android:textColor="@color/white"
         android:textSize="15dip"
         android:textStyle="bold"
         android:typeface="sans" />
- 
-</RelativeLayout>
 
     <ImageButton
         android:id="@+id/favoritBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/marginLR"
-        android:layout_alignRight="@+id/spottingOverview"
-        android:layout_alignTop="@+id/headerOverview"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/thumbnail"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_favorit_empty"
-        android:layout_marginTop="10dp"
         android:tag="Add" />
+ 
+</RelativeLayout>
+
+    
 
     <ListView
         android:id="@+id/spottingOverview"
