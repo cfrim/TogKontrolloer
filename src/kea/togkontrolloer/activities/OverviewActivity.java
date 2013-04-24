@@ -18,6 +18,7 @@ import kea.togkontrolloer.models.TrainLine;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -42,12 +43,17 @@ public class OverviewActivity extends Activity {
         setContentView(R.layout.activity_overview);
         
         RequestHelp.setContext(this);
+        trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );  
         
         if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
+        	Log.i("localget", "inside get trainlines");
         	setTrainLines(RequestHelp.getTrainLines(false));
+        	TrainLineListAdapter tAdapter = new TrainLineListAdapter(this, trainLines);
+    		trainlinesOverview.setAdapter(tAdapter);
         }
         
         if(RequestHelp.fileExists(RequestHelp.getFilenameSpottings())){
+        	Log.i("localget", "inside get spottings");
         	setSpottings(RequestHelp.getSpottings(false));
         }
         
@@ -58,7 +64,7 @@ public class OverviewActivity extends Activity {
         overviewDownloadTask.execute();
         
      // Find the ListView resource.   
-        trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );  
+        
         
     
         trainlinesOverview.setOnItemClickListener(new OnItemClickListener() {
@@ -127,8 +133,7 @@ public class OverviewActivity extends Activity {
 	public void setTrainLines(ArrayList<TrainLine> trainLines) {
 		this.trainLines = trainLines;
 		// TODO Remove this adapter stuff
-		TrainLineListAdapter tAdapter = new TrainLineListAdapter(this, trainLines);
-		trainlinesOverview.setAdapter(tAdapter);
+		
 		
 	}
 
