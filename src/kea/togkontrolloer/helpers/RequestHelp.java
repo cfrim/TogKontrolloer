@@ -21,8 +21,10 @@ import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import com.google.gson.*;
+import com.google.gson.internal.bind.JsonTreeWriter;
 import com.google.gson.stream.JsonReader;
 
 import kea.togkontrolloer.models.*;
@@ -39,6 +41,7 @@ public class RequestHelp {
 	private static String filenameStations = "stations.json";
 	private static String filenameUser = "user.json";
 	private static String filenameSpottings = "spottings.json";
+	private static String filenameFavorites = "favorites.json";
 	
 	public static void setContext(Context context){
 		RequestHelp.context = context;
@@ -187,6 +190,32 @@ public class RequestHelp {
 		return success;
 		
 	}
+	
+	
+public static boolean setFavoritesLocalJSON(String filename, String content){
+		
+		boolean success = true;
+		
+		FileOutputStream file;
+		try {
+			file = context.openFileOutput(filename, Context.MODE_PRIVATE);
+			file.write(content.getBytes());
+			file.close();
+		} catch (FileNotFoundException e) {
+			success = false;
+			Log.e("setLocalJSON", e.toString());
+		} catch (IOException e) {
+			success = false;
+			Log.e("setLocalJSON", e.toString());
+		}catch (JsonSyntaxException e) {
+			Log.e("setLocalJSON", e.toString());
+		}
+			
+
+		return success;
+		
+	}
+	
 	
 	public static String getLocalJSON(String filename){
 		
@@ -356,6 +385,100 @@ public class RequestHelp {
 		
 	}
 	
+	public static void AddRemoveFavorites(TrainLine tLine, boolean addRemove){
+		if(addRemove){
+			if(!fileExists(getFilenameFavorites())){
+				ArrayList<TrainLine> out = new ArrayList<TrainLine>();
+				out.add(tLine);
+				String content = gson.toJson(out);
+				setFavoritesLocalJSON(getFilenameFavorites(), content);
+			}
+			else{
+				String requestJSON = RequestHelp.getLocalJSON(getFilenameFavorites());
+				
+				JsonArray aExistingFavs;
+				ArrayList<TrainLine> out = new ArrayList<TrainLine>();
+				
+				JsonReader reader = new JsonReader(new StringReader(requestJSON));
+				reader.setLenient(true);
+				Log.i("Favorites json", reader.toString());
+				aExistingFavs = gson.fromJson(reader, JsonArray.class);
+				
+				boolean alreadyAdded = false;
+				for(int i=0; i<aExistingFavs.size(); i++){
+					TrainLine oExistingFav = gson.fromJson(aExistingFavs.get(i), TrainLine.class);
+					out.add(oExistingFav);
+					if(tLine.getId()==(int)oExistingFav.getId()){
+						alreadyAdded = true;
+					}
+				}
+				if(!alreadyAdded){
+					out.add(tLine);
+				}
+				String content = gson.toJson(out);
+				setFavoritesLocalJSON(getFilenameFavorites(), content);
+				Log.i("Updated json", content);
+			}
+		}
+		else{
+			if(fileExists(getFilenameFavorites())){
+				int tLineId = tLine.getId();
+				String requestJSON = RequestHelp.getLocalJSON(getFilenameFavorites());
+				ArrayList<TrainLine> list = new ArrayList<TrainLine>();
+				JsonArray aExistingFavs;
+				JsonReader reader = new JsonReader(new StringReader(requestJSON));
+				reader.setLenient(true);
+				int positionOfObject = 0;
+				if(requestJSON != ""){
+					aExistingFavs = gson.fromJson(reader, JsonArray.class);
+					for(int i=0; i<aExistingFavs.size(); i++){
+						TrainLine oExistingFav = gson.fromJson(aExistingFavs.get(i), TrainLine.class);
+						list.add(oExistingFav);
+						if(oExistingFav.getId() == tLineId){
+							positionOfObject = i;
+						}
+					}
+					list.remove(positionOfObject);
+					String content = gson.toJson(list);
+					setFavoritesLocalJSON(getFilenameFavorites(), content);
+				}
+			}
+		}
+	}
+	
+	public static ArrayList<TrainLine> getFavorites(){
+		String requestJSON;
+		ArrayList<TrainLine> favoriteTrainLines = new ArrayList<TrainLine>();
+		
+		// Check if favorites file exists
+		if(!fileExists(getFilenameFavorites())){
+			return null;
+		}
+		else{
+			requestJSON = RequestHelp.getLocalJSON(getFilenameFavorites());
+			if(requestJSON != ""){
+				
+				try{
+					JSONArray favoritesTrainLinesJSON = new JSONArray(requestJSON);
+					int count = favoritesTrainLinesJSON.length();
+					for(int i = 0; i < count; i++){
+						JSONObject trainLineObject = favoritesTrainLinesJSON.getJSONObject(i);
+						
+						TrainLine trainLine = new TrainLine(trainLineObject.getInt("id"), trainLineObject.getString("name"), trainLineObject.getString("destination"), trainLineObject.getString("icon"), null); 
+						favoriteTrainLines.add(trainLine);
+					}
+				}
+				catch(Exception e){
+					Log.e("Favorites get JSON array", e.toString());
+				}
+				return favoriteTrainLines;
+			}
+			
+			return null;
+		}
+
+	}
+	
 	public static int getUserId(){
 		JsonObject userId;
 		String requestJSON = "";
@@ -467,6 +590,14 @@ public class RequestHelp {
 
 	public static void setFilenameUser(String filenameUser) {
 		RequestHelp.filenameUser = filenameUser;
+	}
+	
+	public static String getFilenameFavorites() {
+		return filenameFavorites;
+	}
+
+	public static void setFilenameFavorites(String filenameFavorites) {
+		RequestHelp.filenameFavorites = filenameFavorites;
 	}
 	
 }

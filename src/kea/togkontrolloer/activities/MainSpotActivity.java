@@ -86,9 +86,11 @@ public class MainSpotActivity extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View arg1,
 					int position, long arg3) {
+				
 				try{
 					TrainLine t;
 					t = (TrainLine) parent.getItemAtPosition(position);
+					
 					// If the selected train line id is 0 (NOT SELECTED)
 					if(t.getId() == 0){
 						IsInTrain = false;

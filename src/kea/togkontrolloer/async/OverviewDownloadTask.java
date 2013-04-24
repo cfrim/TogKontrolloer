@@ -76,7 +76,7 @@ public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		
 		pDialog = new ProgressDialog(activity);
 		
-		pDialog.setMessage("Downloader Spottings");
+		pDialog.setMessage("Henter data");
 		pDialog.setIndeterminate(false);
 		pDialog.setMax(100);
 		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
