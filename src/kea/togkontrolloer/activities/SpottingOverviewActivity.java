@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import kea.togkontrolloer.R;
+import kea.togkontrolloer.helpers.RequestHelp;
+import kea.togkontrolloer.models.TrainLine;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -100,12 +102,16 @@ public class SpottingOverviewActivity extends Activity {
 				{
 				favoritBtn.setImageResource(R.drawable.ic_favorit_added);
 				favoritBtn.setTag("No_add");
+				TrainLine newFavorite1 = new TrainLine(5, "H", "Test", "H.png", null);
+		        RequestHelp.AddRemoveFavorites(newFavorite1, false);
 				}
 			
 			else if (favoritBtn.getTag().toString().equals("No_add"))
 			{
 				favoritBtn.setImageResource(R.drawable.ic_favorit_empty);
 				favoritBtn.setTag("Add");
+				TrainLine newFavorite1 = new TrainLine(5, "H", "Test", "H.png", null);
+		        RequestHelp.AddRemoveFavorites(newFavorite1, true);
 				}	
 		}
     };

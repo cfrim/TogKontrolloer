@@ -37,12 +37,7 @@ public class FavoriteActivity extends Activity {
         
 		
         favoriteListView = (ListView)findViewById(R.id.favoritesList);
-    	
-        TrainLine newFavorite = new TrainLine(4, "F", "Havdrup", "F.png", null);
-        RequestHelp.AddRemoveFavorites(newFavorite, true);
         
-        TrainLine newFavorite1 = new TrainLine(5, "H", "Test", "H.png", null);
-        RequestHelp.AddRemoveFavorites(newFavorite1, false);
         
         FavoritesTask getFavoritesTask = new FavoritesTask(this);
         getFavoritesTask.execute();
