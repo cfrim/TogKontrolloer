@@ -22,7 +22,7 @@
     <ImageButton
         android:contentDescription="@string/img_overview"
         android:id="@+id/overview"
-        android:background="@color/SelectedColor"
+        android:background="@color/MenuColor"
         android:layout_width="101dip"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

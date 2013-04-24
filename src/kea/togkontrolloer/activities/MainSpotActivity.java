@@ -178,9 +178,11 @@ public class MainSpotActivity extends Activity {
         ImageButton favoriteBtn = (ImageButton) findViewById(R.id.favorits);
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), FavoriteActivity.class);
+                Intent myIntent = new Intent(view.getContext(), OverviewActivity.class);
                 //  No animations between activities
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                myIntent.putExtra("showFavorites", true);
+                
                 startActivity(myIntent);
                 
             }
@@ -193,6 +195,7 @@ public class MainSpotActivity extends Activity {
                 Intent myIntent = new Intent(view.getContext(), OverviewActivity.class);
                 //  No animations between activities
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                myIntent.putExtra("showFavorites", false);
                 startActivity(myIntent);
             }
         });

@@ -11,6 +11,7 @@ import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 import kea.togkontrolloer.async.OverviewDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.helpers.SpotHelp;
+import kea.togkontrolloer.models.Favorite;
 import kea.togkontrolloer.models.OverviewListItem;
 import kea.togkontrolloer.models.Spotting;
 
@@ -32,26 +33,32 @@ public class OverviewActivity extends Activity {
 	
 	private boolean showFavorites;
 	private ListView trainlinesOverview;
-	private ArrayList<TrainLine> favoriteTrainLines;
+	private ArrayList<Favorite> favoriteTrainLines;
 	private ArrayList<TrainLine> trainLines;
 	private ArrayList<Spotting> spottings;
 	private ArrayList<OverviewListItem> listItems;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Bundle bundle = getIntent().getExtras();
+		showFavorites = bundle.getBoolean("showFavorites");
         // Use custom styling on title bar 
+		
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_overview);
         
         RequestHelp.setContext(this);
-        trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview ); 
+        trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameFavorites())){
+        	favoriteTrainLines = RequestHelp.getFavorites();
+        }
         
         if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
         	Log.i("localget", "inside get trainlines");
         	setTrainLines(RequestHelp.getTrainLines(false));
-        	TrainLineListAdapter tAdapter = new TrainLineListAdapter(this, trainLines);
-    		trainlinesOverview.setAdapter(tAdapter);
         }
         
         if(RequestHelp.fileExists(RequestHelp.getFilenameSpottings())){
@@ -59,7 +66,7 @@ public class OverviewActivity extends Activity {
         	setSpottings(RequestHelp.getSpottings(false));
         }
         
-        // TODO Update LIST
+        updateList();
         
         // GET DATA
         OverviewDownloadTask overviewDownloadTask = new OverviewDownloadTask(this);
@@ -74,9 +81,18 @@ public class OverviewActivity extends Activity {
             	public void onItemClick(AdapterView<?> parent, View view,
             		      int position, long id) {
 
-            		   Intent newActivity = new Intent(view.getContext(), SpottingOverviewActivity.class).
-            				   putExtra("trainLineId", 5);     
-            		   startActivity(newActivity);
+            		  
+            		       		   
+            		   Log.i("position", String.valueOf(position));
+            		   
+            			   OverviewListItem listItem;
+            			   listItem = (OverviewListItem) parent.getItemAtPosition(position);
+            			  
+            			   Intent newActivity = new Intent(view.getContext(), SpottingOverviewActivity.class);
+            			   newActivity.putExtra("showFavorites", showFavorites);
+            		   	   newActivity.putExtra("line_id", listItem.getTrainLine().getId());
+            		   
+            		   	   startActivity(newActivity);
 
 
             }
@@ -87,6 +103,9 @@ public class OverviewActivity extends Activity {
         tv.setText("OVERSIGT"); 
 		
 		ImageButton spotBtn = (ImageButton) findViewById(R.id.spot);
+		ImageButton overviewBtn = (ImageButton) findViewById(R.id.overview);
+		ImageButton favoriteBtn = (ImageButton) findViewById(R.id.favorits);
+		
 		spotBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), MainSpotActivity.class);
@@ -96,16 +115,35 @@ public class OverviewActivity extends Activity {
 
         });
 		
-		ImageButton favoriteBtn = (ImageButton) findViewById(R.id.favorits);
+		if(showFavorites){
+			favoriteBtn.setBackgroundColor(getResources().getColor(R.color.SelectedColor));
+		overviewBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), OverviewActivity.class);
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                myIntent.putExtra("showFavorites", false);
+                startActivity(myIntent);
+            }
+        });
+		}
+		else{
+			overviewBtn.setBackgroundColor(getResources().getColor(R.color.SelectedColor));
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), FavoriteActivity.class);
+                Intent myIntent = new Intent(view.getContext(), OverviewActivity.class);
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                myIntent.putExtra("showFavorites", true);
                 startActivity(myIntent);
+                
                 
             }
 
         });
+		}
+		
+		
+        
+        
 	}
 	
 	public void updateList(){
@@ -117,10 +155,28 @@ public class OverviewActivity extends Activity {
 			int count = favoriteTrainLines.size();
 			for(int i = 0; i < count; i++){
 				
-				TrainLine tempTrainLine = trainLines.get(i);
-				ArrayList<Spotting> tempSpottings = SpotHelp.spotMatches(tempTrainLine, spottings);
+				Favorite thisFavorite = favoriteTrainLines.get(i);
+				TrainLine tempTrainLine;
 				
-				tempListItems.add(new OverviewListItem(tempTrainLine, tempSpottings));
+				int count2 = trainLines.size();
+				for(int i2 = 0; i2 < count2; i2++){
+					
+					if(thisFavorite.getId() == trainLines.get(i2).getId()){
+						
+						tempTrainLine = trainLines.get(i2);
+						
+						ArrayList<Spotting> tempSpottings = new ArrayList<Spotting>();
+						
+						if(spottings != null) tempSpottings = SpotHelp.spotMatches(tempTrainLine, spottings);
+						
+						tempListItems.add(new OverviewListItem(tempTrainLine, tempSpottings));
+						
+						break;
+						
+					}
+					
+				}
+
 				
 			}
 			
@@ -130,7 +186,9 @@ public class OverviewActivity extends Activity {
 			for(int i = 0; i < count; i++){
 				
 				TrainLine tempTrainLine = trainLines.get(i);
-				ArrayList<Spotting> tempSpottings = SpotHelp.spotMatches(tempTrainLine, spottings);
+				ArrayList<Spotting> tempSpottings = new ArrayList<Spotting>();
+				
+				if(spottings != null) tempSpottings = SpotHelp.spotMatches(tempTrainLine, spottings);
 				
 				tempListItems.add(new OverviewListItem(tempTrainLine, tempSpottings));
 				
@@ -142,7 +200,8 @@ public class OverviewActivity extends Activity {
 		
 		listItems = tempListItems;
 		
-		// TODO update spinner adapter here
+		TrainLineListAdapter tAdapter = new TrainLineListAdapter(this, listItems);
+		trainlinesOverview.setAdapter(tAdapter);
 		
 	}
 
@@ -163,6 +222,14 @@ public class OverviewActivity extends Activity {
 
 	public void setSpottings(ArrayList<Spotting> spottings) {
 		this.spottings = spottings;
+	}
+
+	public ArrayList<Favorite> getFavoriteTrainLines() {
+		return favoriteTrainLines;
+	}
+
+	public void setFavoriteTrainLines(ArrayList<Favorite> favoriteTrainLines) {
+		this.favoriteTrainLines = favoriteTrainLines;
 	}
 
 }

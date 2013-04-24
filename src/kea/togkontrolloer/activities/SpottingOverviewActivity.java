@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 public class SpottingOverviewActivity extends Activity {
 
+	private boolean showFavorites;
+	private int line_id;
 	private ListView spottingOverview ;  
 	private ArrayAdapter<String> listAdapter ;  
 	ImageButton favoritBtn;
@@ -29,13 +31,14 @@ public class SpottingOverviewActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Bundle bundle = getIntent().getExtras();
+		showFavorites = bundle.getBoolean("showFavorites");
+		line_id = bundle.getInt("line_id");
+		
         // Use custom styling on title bar 
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_spotting_overview);
-        
-        // Getting passed variables from OverviewActivity
-        Bundle extras = getIntent().getExtras();
-        int trainLineId = extras.getInt("trainLineId");
 
      // Find the ListView resource.   
         spottingOverview = (ListView) findViewById( R.id.spottingOverview );  
@@ -69,7 +72,10 @@ public class SpottingOverviewActivity extends Activity {
         });
 
          
-		ImageButton spotBtn = (ImageButton) findViewById(R.id.spot);
+        ImageButton spotBtn = (ImageButton) findViewById(R.id.spot);
+		ImageButton overviewBtn = (ImageButton) findViewById(R.id.overview);
+		ImageButton favoriteBtn = (ImageButton) findViewById(R.id.favorits);
+		
 		spotBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), MainSpotActivity.class);
@@ -79,16 +85,31 @@ public class SpottingOverviewActivity extends Activity {
 
         });
 		
-		ImageButton favoriteBtn = (ImageButton) findViewById(R.id.favorits);
+		if(showFavorites){
+			favoriteBtn.setBackgroundColor(getResources().getColor(R.color.SelectedColor));
+		overviewBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), OverviewActivity.class);
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                myIntent.putExtra("showFavorites", false);
+                startActivity(myIntent);
+            }
+        });
+		}
+		else{
+			overviewBtn.setBackgroundColor(getResources().getColor(R.color.SelectedColor));
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), FavoriteActivity.class);
+                Intent myIntent = new Intent(view.getContext(), OverviewActivity.class);
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                myIntent.putExtra("showFavorites", true);
                 startActivity(myIntent);
+                
                 
             }
 
         });
+		}
               
         // Favorit button
         favoritBtn = (ImageButton) findViewById(R.id.favoritBtn);
@@ -104,7 +125,7 @@ public class SpottingOverviewActivity extends Activity {
 				favoritBtn.setImageResource(R.drawable.ic_favorit_added);
 				favoritBtn.setTag("No_add");
 
-		        RequestHelp.AddRemoveFavorites(10, true);
+		        RequestHelp.AddRemoveFavorites(line_id, true);
 				}
 			
 			else if (favoritBtn.getTag().toString().equals("No_add"))
@@ -112,7 +133,7 @@ public class SpottingOverviewActivity extends Activity {
 				favoritBtn.setImageResource(R.drawable.ic_favorit_empty);
 				favoritBtn.setTag("Add");
 				
-		        RequestHelp.AddRemoveFavorites(10, false);
+		        RequestHelp.AddRemoveFavorites(line_id, false);
 				}	
 		}
     };

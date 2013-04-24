@@ -444,10 +444,9 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 		}
 	}
 	
-	public static ArrayList<TrainLine> getFavorites(){
+	public static ArrayList<Favorite> getFavorites(){
 		String requestJSON;
 		ArrayList<Favorite> favoriteTrainLines = new ArrayList<Favorite>();
-		ArrayList<TrainLine> sortedFavoriteTrainLines = new ArrayList<TrainLine>();
 		// Check if favorites file exists
 		if(!fileExists(getFilenameFavorites())){
 			return null;
@@ -465,22 +464,14 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 						Favorite favorite = new Favorite(favoriteObject.getInt("id")); 
 						favoriteTrainLines.add(favorite);
 					}
+					
+					return favoriteTrainLines;
 				}
 				catch(Exception e){
 					Log.e("Favorites get JSON array", e.toString());
 				}
-				ArrayList<TrainLine>listOfTrainLines = getTrainLines();
-				for(int i = 0; i < favoriteTrainLines.size(); i++){
-					for(int f = 0; f < listOfTrainLines.size(); f++){
-						if(favoriteTrainLines.get(i).getId() == listOfTrainLines.get(f).getId()){
-							sortedFavoriteTrainLines.add(listOfTrainLines.get(f));
-						}
-					}
-					
-				}
 				
 				
-				return sortedFavoriteTrainLines;
 			}
 			
 			return null;

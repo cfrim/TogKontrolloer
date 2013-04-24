@@ -3,6 +3,7 @@ package kea.togkontrolloer.adapters;
 import java.util.ArrayList;
 
 import kea.togkontrolloer.R;
+import kea.togkontrolloer.models.OverviewListItem;
 import kea.togkontrolloer.models.TrainLine;
 import android.app.Activity;
 import android.content.Context;
@@ -19,10 +20,10 @@ import android.widget.TextView;
 public class TrainLineListAdapter extends BaseAdapter{
  
     private Activity activity;
-    private ArrayList<TrainLine> data;
+    private ArrayList<OverviewListItem> data;
     private static LayoutInflater inflater=null;
  
-    public TrainLineListAdapter(Activity a, ArrayList<TrainLine> d) {
+    public TrainLineListAdapter(Activity a, ArrayList<OverviewListItem> d) {
         this.activity = a;
         this.data=d;
         this.inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -33,7 +34,7 @@ public class TrainLineListAdapter extends BaseAdapter{
     }
  
     public Object getItem(int position) {
-        return position;
+        return data.get(position);
     }
  
     public long getItemId(int position) {
@@ -47,7 +48,7 @@ public class TrainLineListAdapter extends BaseAdapter{
         TextView title = (TextView)vi.findViewById(R.id.title); // title
         ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image);
         TrainLine trainLine;
-        trainLine = data.get(position);
+        trainLine = data.get(position).getTrainLine();
  
         // Setting all values in listview
         //title.setText(item.title);

@@ -52,16 +52,13 @@ public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		
 		if(downloadTrainLines){
 			activity.setTrainLines(fetchedLines);
-			ListView trainlinesOverview = (ListView) activity.findViewById(R.id.trainlinesOverview);  
-			TrainLineListAdapter tAdapter = new TrainLineListAdapter(activity, activity.getTrainLines());
-    		trainlinesOverview.setAdapter(tAdapter);
 		}
 		
 		if(downloadSpottings){
 			activity.setSpottings(fetchedSpottings);
 		}
 		
-		// TODO run updateList here
+		if(downloadTrainLines || downloadSpottings) activity.updateList();
 		
 		pDialog.dismiss();
 		
