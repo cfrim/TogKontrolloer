@@ -25,15 +25,18 @@
         </activity>
         <activity
             android:name="kea.togkontrolloer.activities.FavoriteActivity"
-            android:label="@string/title_activity_favorite" >
+            android:label="@string/title_activity_favorite" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="kea.togkontrolloer.activities.OverviewActivity"
-            android:label="@string/title_activity_overview" >
+            android:label="@string/title_activity_overview" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="kea.togkontrolloer.activities.SpottingOverviewActivity"
-            android:label="@string/title_activity_specific_line_overview" >
+            android:label="@string/title_activity_specific_line_overview" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="kea.togkontrolloer.activities.SplashActivity"
