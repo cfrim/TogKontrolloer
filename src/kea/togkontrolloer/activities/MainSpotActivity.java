@@ -128,7 +128,7 @@ public class MainSpotActivity extends Activity {
         });
         
         // OnClick SPOT
-        Button spotButton = (Button) findViewById(R.id.addSpot);
+        ImageButton spotButton = (ImageButton) findViewById(R.id.addSpot);
         spotButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
