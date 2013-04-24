@@ -79,7 +79,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white" />
 
-    <Button
+    <ImageButton
         android:id="@+id/addSpot"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
@@ -87,8 +87,9 @@
         android:layout_alignLeft="@+id/trainLinesSpinner"
         android:layout_alignRight="@+id/fromStationsSpinner"
         android:layout_marginBottom="18dp"
-        android:background="@color/MenuColor"
-        android:text="Spot"
+        android:background="@drawable/round_corners"
+        android:textStyle="bold"
+        android:src="@drawable/spot_button" 
         android:textColor="@color/white" />
 
 </RelativeLayout>
