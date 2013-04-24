@@ -16,7 +16,7 @@
         android:background="@color/MenuColor"
         android:src="@drawable/ic_backsmall" />
     <ImageButton
-        android:id="@+id/backBtn"
+        android:id="@+id/refreshBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
