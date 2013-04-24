@@ -381,11 +381,13 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 		
 	}
 	
-	public static void AddRemoveFavorites(TrainLine tLine, boolean addRemove){
+	public static void AddRemoveFavorites(int id, boolean addRemove){
+		ArrayList<Favorite> out = new ArrayList<Favorite>();
+				
 		if(addRemove){
 			if(!fileExists(getFilenameFavorites())){
-				ArrayList<TrainLine> out = new ArrayList<TrainLine>();
-				out.add(tLine);
+				Favorite newfavorite = new Favorite(id);
+				out.add(newfavorite);
 				String content = gson.toJson(out);
 				setFavoritesLocalJSON(getFilenameFavorites(), content);
 			}
@@ -393,8 +395,7 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 				String requestJSON = RequestHelp.getLocalJSON(getFilenameFavorites());
 				
 				JsonArray aExistingFavs;
-				ArrayList<TrainLine> out = new ArrayList<TrainLine>();
-				
+				Favorite newfavorite = new Favorite(id);
 				JsonReader reader = new JsonReader(new StringReader(requestJSON));
 				reader.setLenient(true);
 				Log.i("Favorites json", reader.toString());
@@ -402,14 +403,14 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 				
 				boolean alreadyAdded = false;
 				for(int i=0; i<aExistingFavs.size(); i++){
-					TrainLine oExistingFav = gson.fromJson(aExistingFavs.get(i), TrainLine.class);
+					Favorite oExistingFav = gson.fromJson(aExistingFavs.get(i), Favorite.class);
 					out.add(oExistingFav);
-					if(tLine.getId()==(int)oExistingFav.getId()){
+					if(newfavorite.getId()==(int)oExistingFav.getId()){
 						alreadyAdded = true;
 					}
 				}
 				if(!alreadyAdded){
-					out.add(tLine);
+					out.add(newfavorite);
 				}
 				String content = gson.toJson(out);
 				setFavoritesLocalJSON(getFilenameFavorites(), content);
@@ -418,9 +419,10 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 		}
 		else{
 			if(fileExists(getFilenameFavorites())){
-				int tLineId = tLine.getId();
+				int tLineId = id;
+				Favorite newfavorite = new Favorite(id);
 				String requestJSON = RequestHelp.getLocalJSON(getFilenameFavorites());
-				ArrayList<TrainLine> list = new ArrayList<TrainLine>();
+				ArrayList<Favorite> list = new ArrayList<Favorite>();
 				JsonArray aExistingFavs;
 				JsonReader reader = new JsonReader(new StringReader(requestJSON));
 				reader.setLenient(true);
@@ -428,8 +430,8 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 				if(requestJSON != ""){
 					aExistingFavs = gson.fromJson(reader, JsonArray.class);
 					for(int i=0; i<aExistingFavs.size(); i++){
-						TrainLine oExistingFav = gson.fromJson(aExistingFavs.get(i), TrainLine.class);
-						list.add(oExistingFav);
+						Favorite oExistingFav = gson.fromJson(aExistingFavs.get(i), Favorite.class);
+						list.add(newfavorite);
 						if(oExistingFav.getId() == tLineId){
 							positionOfObject = i;
 						}
@@ -444,8 +446,8 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 	
 	public static ArrayList<TrainLine> getFavorites(){
 		String requestJSON;
-		ArrayList<TrainLine> favoriteTrainLines = new ArrayList<TrainLine>();
-		
+		ArrayList<Favorite> favoriteTrainLines = new ArrayList<Favorite>();
+		ArrayList<TrainLine> sortedFavoriteTrainLines = new ArrayList<TrainLine>();
 		// Check if favorites file exists
 		if(!fileExists(getFilenameFavorites())){
 			return null;
@@ -458,16 +460,27 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 					JSONArray favoritesTrainLinesJSON = new JSONArray(requestJSON);
 					int count = favoritesTrainLinesJSON.length();
 					for(int i = 0; i < count; i++){
-						JSONObject trainLineObject = favoritesTrainLinesJSON.getJSONObject(i);
+						JSONObject favoriteObject = favoritesTrainLinesJSON.getJSONObject(i);
 						
-						TrainLine trainLine = new TrainLine(trainLineObject.getInt("id"), trainLineObject.getString("name"), trainLineObject.getString("destination"), trainLineObject.getString("icon"), null); 
-						favoriteTrainLines.add(trainLine);
+						Favorite favorite = new Favorite(favoriteObject.getInt("id")); 
+						favoriteTrainLines.add(favorite);
 					}
 				}
 				catch(Exception e){
 					Log.e("Favorites get JSON array", e.toString());
 				}
-				return favoriteTrainLines;
+				ArrayList<TrainLine>listOfTrainLines = getTrainLines();
+				for(int i = 0; i < favoriteTrainLines.size(); i++){
+					for(int f = 0; f < listOfTrainLines.size(); f++){
+						if(favoriteTrainLines.get(i).getId() == listOfTrainLines.get(f).getId()){
+							sortedFavoriteTrainLines.add(listOfTrainLines.get(f));
+						}
+					}
+					
+				}
+				
+				
+				return sortedFavoriteTrainLines;
 			}
 			
 			return null;

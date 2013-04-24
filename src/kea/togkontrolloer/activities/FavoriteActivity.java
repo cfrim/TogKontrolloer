@@ -6,6 +6,8 @@ import kea.togkontrolloer.R;
 import kea.togkontrolloer.adapters.TrainLineListAdapter;
 import kea.togkontrolloer.async.FavoritesTask;
 import kea.togkontrolloer.helpers.RequestHelp;
+import kea.togkontrolloer.models.OverviewListItem;
+import kea.togkontrolloer.models.Spotting;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
 import android.os.Bundle;
@@ -24,6 +26,9 @@ public class FavoriteActivity extends Activity {
 
     private ListView favoriteListView;	
 	private ArrayList<TrainLine> favoriteTrainLines;
+	private ArrayList<TrainLine> trainLines;
+	private ArrayList<Spotting> spottings;
+	private ArrayList<OverviewListItem> listItems;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,17 @@ public class FavoriteActivity extends Activity {
         
 		
         favoriteListView = (ListView)findViewById(R.id.favoritesList);
+        
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
+        	Log.i("localget", "inside get trainlines");
+        	setTrainLines(RequestHelp.getTrainLines(false));
+        }
+        
+        if(RequestHelp.fileExists(RequestHelp.getFilenameSpottings())){
+        	Log.i("localget", "inside get spottings");
+        	setSpottings(RequestHelp.getSpottings(false));
+        }
         
         
         FavoritesTask getFavoritesTask = new FavoritesTask(this);
@@ -90,6 +106,30 @@ public class FavoriteActivity extends Activity {
 			Log.i("Setting favorites", "No favorites");
 		}
         
+	}
+
+	public ArrayList<TrainLine> getTrainLines() {
+		return trainLines;
+	}
+
+	public void setTrainLines(ArrayList<TrainLine> trainLines) {
+		this.trainLines = trainLines;
+	}
+
+	public ArrayList<Spotting> getSpottings() {
+		return spottings;
+	}
+
+	public void setSpottings(ArrayList<Spotting> spottings) {
+		this.spottings = spottings;
+	}
+
+	public ArrayList<OverviewListItem> getListItems() {
+		return listItems;
+	}
+
+	public void setListItems(ArrayList<OverviewListItem> listItems) {
+		this.listItems = listItems;
 	}
 
 }

@@ -30,7 +30,9 @@ import android.widget.TextView;
 
 public class OverviewActivity extends Activity {
 	
-	private ListView trainlinesOverview; 
+	private boolean showFavorites;
+	private ListView trainlinesOverview;
+	private ArrayList<TrainLine> favoriteTrainLines;
 	private ArrayList<TrainLine> trainLines;
 	private ArrayList<Spotting> spottings;
 	private ArrayList<OverviewListItem> listItems;
@@ -43,7 +45,7 @@ public class OverviewActivity extends Activity {
         setContentView(R.layout.activity_overview);
         
         RequestHelp.setContext(this);
-        trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );  
+        trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview ); 
         
         if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
         	Log.i("localget", "inside get trainlines");
@@ -110,15 +112,33 @@ public class OverviewActivity extends Activity {
 		
 		ArrayList<OverviewListItem> tempListItems = new ArrayList<OverviewListItem>();
 		
-		int count = trainLines.size();
-		for(int i = 0; i < count; i++){
+		if(showFavorites){
 			
-			TrainLine tempTrainLine = trainLines.get(i);
-			ArrayList<Spotting> tempSpottings = SpotHelp.spotMatches(tempTrainLine, spottings);
+			int count = favoriteTrainLines.size();
+			for(int i = 0; i < count; i++){
+				
+				TrainLine tempTrainLine = trainLines.get(i);
+				ArrayList<Spotting> tempSpottings = SpotHelp.spotMatches(tempTrainLine, spottings);
+				
+				tempListItems.add(new OverviewListItem(tempTrainLine, tempSpottings));
+				
+			}
 			
-			tempListItems.add(new OverviewListItem(tempTrainLine, tempSpottings));
+		}else{
+			
+			int count = trainLines.size();
+			for(int i = 0; i < count; i++){
+				
+				TrainLine tempTrainLine = trainLines.get(i);
+				ArrayList<Spotting> tempSpottings = SpotHelp.spotMatches(tempTrainLine, spottings);
+				
+				tempListItems.add(new OverviewListItem(tempTrainLine, tempSpottings));
+				
+			}
 			
 		}
+		
+		
 		
 		listItems = tempListItems;
 		

@@ -103,16 +103,16 @@ public class SpottingOverviewActivity extends Activity {
 				{
 				favoritBtn.setImageResource(R.drawable.ic_favorit_added);
 				favoritBtn.setTag("No_add");
-				TrainLine newFavorite1 = new TrainLine(5, "H", "Test", "H.png", null);
-		        RequestHelp.AddRemoveFavorites(newFavorite1, false);
+
+		        RequestHelp.AddRemoveFavorites(10, true);
 				}
 			
 			else if (favoritBtn.getTag().toString().equals("No_add"))
 			{
 				favoritBtn.setImageResource(R.drawable.ic_favorit_empty);
 				favoritBtn.setTag("Add");
-				TrainLine newFavorite1 = new TrainLine(5, "H", "Test", "H.png", null);
-		        RequestHelp.AddRemoveFavorites(newFavorite1, true);
+				
+		        RequestHelp.AddRemoveFavorites(10, false);
 				}	
 		}
     };
