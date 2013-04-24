@@ -40,15 +40,66 @@
         android:background="@color/MenuColor"
         android:src="@drawable/ic_spot_l" />
 
+    <RelativeLayout
+        android:id="@+id/list_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_selector"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:padding="5dip" >
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip">
+ 
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:src="@drawable/a"/>
+ 
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="9dp"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Farum"
+        android:textColor="@color/white"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+ 
+</RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/favoritBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/marginLR"
+        android:layout_alignRight="@+id/spottingOverview"
+        android:layout_alignTop="@+id/headerOverview"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_favorit_empty"
+        android:layout_marginTop="10dp"
+        android:tag="Add" />
+
     <ListView
         android:id="@+id/spottingOverview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/favorits"
-        android:layout_below="@+id/headerOverview"
+        android:layout_below="@+id/list_row"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/marginLR"
-        android:layout_marginRight="@dimen/marginLR"
         android:cacheColorHint="@color/bgColor"
         android:divider="@color/divider_dark"
         android:dividerHeight="1dp"
@@ -56,25 +107,5 @@
         android:textColor="@color/white" >
 
     </ListView>
-
-    <TextView
-        android:id="@+id/headerOverview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="13dp"
-        android:text="C -> Klamenborg:"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white" android:layout_alignLeft="@+id/spottingOverview"/>
-
-    <ImageButton
-        android:id="@+id/favoritBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/spottingOverview"
-        android:layout_alignRight="@+id/spottingOverview"
-        android:background="@color/bgColor"
-        android:tag="Add"
-        android:src="@drawable/ic_favorit_empty" />
 
 </RelativeLayout>

@@ -55,7 +55,7 @@
         android:layout_marginLeft="@dimen/marginLR"
         android:layout_marginRight="@dimen/marginLR"
         android:layout_marginTop="17dp"
-        android:text="Train line (Udfyld kun i tog)"
+        android:text="Vælg Linje"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white" />
 
