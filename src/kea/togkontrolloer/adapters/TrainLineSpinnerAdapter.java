@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
@@ -24,12 +25,13 @@ public class TrainLineSpinnerAdapter extends BaseAdapter{
   */
  Activity activity;
  ArrayList<TrainLine> data = new ArrayList<TrainLine>();
- 
+ public LayoutInflater inflater;
  
  public TrainLineSpinnerAdapter(Activity activity, ArrayList<TrainLine> data){
      this.activity = activity;
-     this.data.add(new TrainLine(0, "Ikke i tog", "", "", new ArrayList<Station>()));
+     this.data.add(new TrainLine(0, "", "Ikke i tog", "", new ArrayList<Station>()));
      this.data.addAll(data);
+     this.inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
  }
 
 
@@ -67,7 +69,7 @@ public class TrainLineSpinnerAdapter extends BaseAdapter{
   */
  @Override
  public View getView(int position, View convertView, ViewGroup parent) {
- 	TextView v = new TextView(activity.getApplicationContext());
+ 	/*TextView v = new TextView(activity.getApplicationContext());
      v.setTextColor(Color.BLACK);
      if(data.get(position).getId() != 0){
     	v.setText(data.get(position).getName()+" - "+data.get(position).getDestination()); 
@@ -77,7 +79,52 @@ public class TrainLineSpinnerAdapter extends BaseAdapter{
      }
      
      v.setPadding(10, 10, 10, 10);
-     return v;
+     return v;*/
+	 
+	 View vi=convertView;
+
+     vi = inflater.inflate(R.layout.spinner_list_row, null);
+	 
+     TrainLine trainLine;
+     trainLine = data.get(position);
+
+
+     TextView title = (TextView)vi.findViewById(R.id.title); // title
+     ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image);
+
+     title.setText(trainLine.getDestination());
+     title.setTextColor(Color.BLACK);
+     
+     // If no icon, it should'nt appear
+     if(trainLine.getIcon().equals("")){
+      	thumb_image.setVisibility(View.GONE);
+      	title.setPadding(0, -6, 0, 0);
+      }
+     if(trainLine.getIcon().equals("A.png")){
+     	thumb_image.setImageResource(R.drawable.a);
+     }
+     else if(trainLine.getIcon().equals("B.png")){
+     	thumb_image.setImageResource(R.drawable.b);
+     }
+     else if(trainLine.getIcon().equals("BX.png")){
+     	thumb_image.setImageResource(R.drawable.bx);
+     }
+     else if(trainLine.getIcon().equals("C.png")){
+     	thumb_image.setImageResource(R.drawable.c);
+     }
+     else if(trainLine.getIcon().equals("E.png")){
+     	thumb_image.setImageResource(R.drawable.e);
+     }
+     else if(trainLine.getIcon().equals("F.png")){
+     	thumb_image.setImageResource(R.drawable.f);
+     }
+     else if(trainLine.getIcon().equals("H.png")){
+     	thumb_image.setImageResource(R.drawable.h);
+     }
+     
+     return vi;
+     
+     
  }
 
 	@Override

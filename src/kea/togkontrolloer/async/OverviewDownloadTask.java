@@ -2,8 +2,10 @@ package kea.togkontrolloer.async;
 
 import java.util.ArrayList;
 
+import kea.togkontrolloer.R;
 import kea.togkontrolloer.activities.OverviewActivity;
 import kea.togkontrolloer.adapters.StationSpinnerAdapter;
+import kea.togkontrolloer.adapters.TrainLineListAdapter;
 import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 import kea.togkontrolloer.helpers.MathHelp;
 import kea.togkontrolloer.helpers.RequestHelp;
@@ -12,6 +14,8 @@ import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
@@ -48,11 +52,16 @@ public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		
 		if(downloadTrainLines){
 			activity.setTrainLines(fetchedLines);
+			ListView trainlinesOverview = (ListView) activity.findViewById(R.id.trainlinesOverview);  
+			TrainLineListAdapter tAdapter = new TrainLineListAdapter(activity, activity.getTrainLines());
+    		trainlinesOverview.setAdapter(tAdapter);
 		}
 		
 		if(downloadSpottings){
 			activity.setSpottings(fetchedSpottings);
 		}
+		
+		// TODO run updateList here
 		
 		pDialog.dismiss();
 		
@@ -68,15 +77,19 @@ public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 			downloadTrainLines = false;
 		}
 		
+		Log.i("download trainlines", String.valueOf(downloadTrainLines));
+		
 		if(RequestHelp.isConnected() && (!RequestHelp.fileExists(RequestHelp.getFilenameSpottings()) || MathHelp.getTimeDiff("now", RequestHelp.fileTimestamp(RequestHelp.getFilenameSpottings())) >= 5 )){
 			downloadSpottings = true;
 		}else{
 			downloadSpottings = false;
 		}
 		
+		Log.i("download trainlines", String.valueOf(downloadTrainLines));
+		
 		pDialog = new ProgressDialog(activity);
 		
-		pDialog.setMessage("Downloader Spottings");
+		pDialog.setMessage("Henter data");
 		pDialog.setIndeterminate(false);
 		pDialog.setMax(100);
 		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
