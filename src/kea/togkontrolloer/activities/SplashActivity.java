@@ -1,12 +1,9 @@
 package kea.togkontrolloer.activities;
 
 import kea.togkontrolloer.R;
-import kea.togkontrolloer.R.layout;
-import android.content.Intent;
-import kea.togkontrolloer.R.menu;
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Window;
 
 public class SplashActivity extends Activity {

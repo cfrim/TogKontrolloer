@@ -2,10 +2,6 @@ package kea.togkontrolloer.async;
 
 import java.util.ArrayList;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
-import android.widget.Spinner;
-import kea.togkontrolloer.R;
 import kea.togkontrolloer.activities.MainSpotActivity;
 import kea.togkontrolloer.adapters.StationSpinnerAdapter;
 import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
@@ -13,6 +9,9 @@ import kea.togkontrolloer.helpers.MathHelp;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.widget.Spinner;
 
 public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 	
@@ -22,7 +21,6 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 	private ProgressDialog pDialog;
 	private ArrayList<TrainLine> fetchedLines;
 	private ArrayList<Station> fetchedStations;
-	private int fetchedUserId;
 	
 	public MainSpotDownloadTask(MainSpotActivity activity){
 		this.activity = activity;
@@ -33,9 +31,7 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		
 		boolean success = true;
 		
-		RequestHelp.setContext(activity);
-		
-		fetchedUserId = RequestHelp.getUserId();
+		RequestHelp.getUserId();
 		
 		if(downloadTrainLines) fetchedLines = RequestHelp.getTrainLines(true);
 		publishProgress(50);
@@ -49,6 +45,8 @@ public class MainSpotDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 	@Override
 	protected void onPreExecute(){
 		super.onPreExecute();
+		
+		RequestHelp.setContext(activity);
 		
 		if(RequestHelp.isConnected() && (!RequestHelp.fileExists(RequestHelp.getFilenameTrainLines()) || MathHelp.getTimeDiff("now", RequestHelp.fileTimestamp(RequestHelp.getFilenameTrainLines())) >= 60 * 24 )){
 			downloadTrainLines = true;

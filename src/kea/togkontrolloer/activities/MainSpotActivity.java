@@ -1,6 +1,8 @@
 package kea.togkontrolloer.activities;
 
 import java.util.ArrayList;
+
+import kea.togkontrolloer.R;
 import kea.togkontrolloer.adapters.StationSpinnerAdapter;
 import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 import kea.togkontrolloer.async.MainSpotDownloadTask;
@@ -8,22 +10,16 @@ import kea.togkontrolloer.async.MainSpotPostTask;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
-
-import kea.togkontrolloer.R;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainSpotActivity extends Activity {
 	
@@ -50,21 +46,24 @@ public class MainSpotActivity extends Activity {
         final TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
         tv.setText("SPOTTING");
         
+        // TrainlineSpinner On item selected
+        // Get GUI elements
+        final TextView fromStationText = (TextView)findViewById(R.id.fromStationText);
+        final Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
+        final Spinner fromStationsSpinner = (Spinner)findViewById(R.id.fromStationsSpinner);
         
         RequestHelp.setContext(this);
         
         if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
         	setTrainLines(RequestHelp.getTrainLines(false));
-        	Spinner trainLineSpinner = (Spinner) findViewById(R.id.trainLinesSpinner);
     		TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(this, trainLines);
-    		trainLineSpinner.setAdapter(trainLineAdapter);
+    		trainLinesSpinner.setAdapter(trainLineAdapter);
         }
         
         if(RequestHelp.fileExists(RequestHelp.getFilenameStations())){
         	setStations(RequestHelp.getStations(false));
-        	Spinner stationSpinner = (Spinner) findViewById(R.id.fromStationsSpinner);
         	StationSpinnerAdapter stationAdapter = new StationSpinnerAdapter(this, stations);
-        	stationSpinner.setAdapter(stationAdapter);
+        	fromStationsSpinner.setAdapter(stationAdapter);
         }
         
         // GET DATA
@@ -74,11 +73,7 @@ public class MainSpotActivity extends Activity {
         
         
         
-        // TrainlineSpinner On item selected
-        // Get GUI elements
-        final TextView fromStationText = (TextView)findViewById(R.id.fromStationText);
-        final Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
-        final Spinner fromStationsSpinner = (Spinner)findViewById(R.id.fromStationsSpinner);
+       
        
         
         trainLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -139,7 +134,6 @@ public class MainSpotActivity extends Activity {
 				int fromStationId = selectedFromStation.getId();
 				Station toStation = null;
 				int toStationId = 0;
-				int userId;
 				
 				if(IsInTrain){
 					ArrayList<Station> selectedTrainLineStations = selectedTrainLine.getStations();

@@ -7,14 +7,12 @@ import kea.togkontrolloer.models.OverviewListItem;
 import kea.togkontrolloer.models.TrainLine;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-
 import android.widget.TextView;
  
 public class TrainLineListAdapter extends BaseAdapter{
@@ -26,7 +24,7 @@ public class TrainLineListAdapter extends BaseAdapter{
     public TrainLineListAdapter(Activity a, ArrayList<OverviewListItem> d) {
         this.activity = a;
         this.data=d;
-        this.inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
  
     public int getCount() {

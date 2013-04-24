@@ -2,21 +2,14 @@ package kea.togkontrolloer.async;
 
 import java.util.ArrayList;
 
-import kea.togkontrolloer.R;
 import kea.togkontrolloer.activities.OverviewActivity;
-import kea.togkontrolloer.adapters.StationSpinnerAdapter;
-import kea.togkontrolloer.adapters.TrainLineListAdapter;
-import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 import kea.togkontrolloer.helpers.MathHelp;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.Spotting;
-import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
-import android.widget.Spinner;
 
 public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 	
@@ -36,7 +29,7 @@ public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 		
 		boolean success = true;
 		
-		RequestHelp.setContext(activity);
+		RequestHelp.getUserId();
 		
 		if(downloadTrainLines) fetchedLines = RequestHelp.getTrainLines(true);
 		publishProgress(50);
@@ -67,6 +60,8 @@ public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
+		
+		RequestHelp.setContext(activity);
 		
 		if(RequestHelp.isConnected() && (!RequestHelp.fileExists(RequestHelp.getFilenameTrainLines()) || MathHelp.getTimeDiff("now", RequestHelp.fileTimestamp(RequestHelp.getFilenameTrainLines())) >= 60 * 24 )){
 			downloadTrainLines = true;

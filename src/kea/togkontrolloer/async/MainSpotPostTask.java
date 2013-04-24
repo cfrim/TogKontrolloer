@@ -1,11 +1,11 @@
 package kea.togkontrolloer.async;
 
+import kea.togkontrolloer.activities.MainSpotActivity;
+import kea.togkontrolloer.helpers.RequestHelp;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-import kea.togkontrolloer.activities.MainSpotActivity;
-import kea.togkontrolloer.helpers.RequestHelp;
 
 public class MainSpotPostTask extends AsyncTask<Void, Integer, Boolean> {
 	
@@ -31,7 +31,9 @@ public class MainSpotPostTask extends AsyncTask<Void, Integer, Boolean> {
 	protected Boolean doInBackground(Void... params) {
 		// TODO Auto-generated method stub
 		boolean success = true;
-		RequestHelp.setContext(activity);
+		
+		this.userId = RequestHelp.getUserId();
+		
 		if(doPost){
 			if(trainLineId == 0 && toStationId == 0){
 				try{
@@ -63,7 +65,6 @@ public class MainSpotPostTask extends AsyncTask<Void, Integer, Boolean> {
 		super.onPreExecute();
 		
 		RequestHelp.setContext(activity);
-		this.userId = RequestHelp.getUserId();
 		if(RequestHelp.isConnected() && userId != 0){
 			doPost = true;
 			pDialog = new ProgressDialog(activity);

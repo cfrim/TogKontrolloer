@@ -2,7 +2,9 @@ package kea.togkontrolloer.helpers;
 
 import java.util.ArrayList;
 
-import kea.togkontrolloer.models.*;
+import kea.togkontrolloer.models.Spotting;
+import kea.togkontrolloer.models.Station;
+import kea.togkontrolloer.models.TrainLine;
 
 public class SpotHelp {
 

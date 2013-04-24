@@ -3,22 +3,17 @@ package kea.togkontrolloer.activities;
 import java.util.ArrayList;
 
 import kea.togkontrolloer.R;
-
-import kea.togkontrolloer.adapters.StationSpinnerAdapter;
 import kea.togkontrolloer.adapters.TrainLineListAdapter;
-import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
-
 import kea.togkontrolloer.async.OverviewDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.helpers.SpotHelp;
 import kea.togkontrolloer.models.Favorite;
 import kea.togkontrolloer.models.OverviewListItem;
 import kea.togkontrolloer.models.Spotting;
-
 import kea.togkontrolloer.models.TrainLine;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -26,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 public class OverviewActivity extends Activity {

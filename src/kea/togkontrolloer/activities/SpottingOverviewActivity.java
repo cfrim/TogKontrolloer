@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import kea.togkontrolloer.R;
-import kea.togkontrolloer.adapters.TrainLineListAdapter;
 import kea.togkontrolloer.helpers.RequestHelp;
-import kea.togkontrolloer.models.TrainLine;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;

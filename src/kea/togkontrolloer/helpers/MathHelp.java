@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.util.Log;
-
 public class MathHelp {
 
 	public static double getDistance(double lat1, double lon1, double lat2, double lon2){

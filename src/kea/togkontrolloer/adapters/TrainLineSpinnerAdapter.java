@@ -1,6 +1,7 @@
 package kea.togkontrolloer.adapters;
 
 import java.util.ArrayList;
+
 import kea.togkontrolloer.R;
 import kea.togkontrolloer.models.Station;
 import kea.togkontrolloer.models.TrainLine;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 //The custom spinner adapters are created in order to be able to pass objects into the spinners instead of strings
