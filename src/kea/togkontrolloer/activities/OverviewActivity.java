@@ -93,8 +93,10 @@ public class OverviewActivity extends Activity {
         });
         
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-        TextView tv = (TextView) findViewById(R.id.dynamicTitleView); 
-        tv.setText("OVERSIGT"); 
+        TextView tv = (TextView) findViewById(R.id.dynamicTitleView);
+        
+        if(showFavorites) tv.setText("FAVORITTER");
+        else tv.setText("OVERSIGT");
 		
 		ImageButton spotBtn = (ImageButton) findViewById(R.id.spot);
 		ImageButton overviewBtn = (ImageButton) findViewById(R.id.overview);
@@ -146,7 +148,9 @@ public class OverviewActivity extends Activity {
 		
 		if(showFavorites){
 			
-			int count = favoriteTrainLines.size();
+			int count;
+			if(favoriteTrainLines != null) count = favoriteTrainLines.size();
+			else count = 0;
 			for(int i = 0; i < count; i++){
 				
 				Favorite thisFavorite = favoriteTrainLines.get(i);

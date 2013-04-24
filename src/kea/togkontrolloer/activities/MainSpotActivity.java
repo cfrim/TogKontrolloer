@@ -89,7 +89,7 @@ public class MainSpotActivity extends Activity {
 					// If the selected train line id is 0 (NOT SELECTED)
 					if(t.getId() == 0){
 						IsInTrain = false;
-						fromStationText.setText("Vælg station");
+						fromStationText.setText("V\u00E6lg station");
 						
 						// Get all stations
 						ArrayList<Station> stationsList = RequestHelp.getStations();
@@ -100,7 +100,7 @@ public class MainSpotActivity extends Activity {
 					}
 					else{
 						IsInTrain = true;
-						fromStationText.setText("Fra station:");
+						fromStationText.setText("Fra station");
 						
 						ArrayList<Station> trainLineStationsList = t.getStations();
 						StationSpinnerAdapter stationsSpinnerAdapter = new StationSpinnerAdapter(activity, trainLineStationsList);
