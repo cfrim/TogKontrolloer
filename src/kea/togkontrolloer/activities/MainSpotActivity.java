@@ -54,17 +54,14 @@ public class MainSpotActivity extends Activity {
         
         RequestHelp.setContext(this);
         
-        if(RequestHelp.fileExists(RequestHelp.getFilenameTrainLines())){
-        	setTrainLines(RequestHelp.getTrainLines(false));
-    		TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(this, trainLines);
-    		trainLinesSpinner.setAdapter(trainLineAdapter);
-        }
+        setTrainLines(RequestHelp.getTrainLines(false));
+    	TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(this, trainLines);
+    	trainLinesSpinner.setAdapter(trainLineAdapter);
         
-        if(RequestHelp.fileExists(RequestHelp.getFilenameStations())){
-        	setStations(RequestHelp.getStations(false));
-        	StationSpinnerAdapter stationAdapter = new StationSpinnerAdapter(this, stations);
-        	fromStationsSpinner.setAdapter(stationAdapter);
-        }
+
+        setStations(RequestHelp.getStations(false));
+        StationSpinnerAdapter stationAdapter = new StationSpinnerAdapter(this, stations);
+        fromStationsSpinner.setAdapter(stationAdapter);
         
         // GET DATA
         MainSpotDownloadTask mainSpotDownloadTask = new MainSpotDownloadTask(this);

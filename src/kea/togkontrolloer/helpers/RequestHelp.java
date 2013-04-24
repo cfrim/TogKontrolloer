@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
@@ -53,11 +54,16 @@ public class RequestHelp {
 	
 	public static boolean isConnected(){
 		
+		boolean isConnected = false;
+		
 		ConnectivityManager cm =
 		        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		 
+		
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-		boolean isConnected = activeNetwork.isConnectedOrConnecting();
+		
+		if(activeNetwork != null){
+			isConnected = activeNetwork.isConnected();
+		}
 		
 		return isConnected;
 	}
@@ -196,7 +202,7 @@ public class RequestHelp {
 	}
 	
 	
-public static boolean setFavoritesLocalJSON(String filename, String content){
+	public static boolean setFavoritesLocalJSON(String filename, String content){
 		
 		boolean success = true;
 		
@@ -247,6 +253,31 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 		
 	}
 	
+	public static String getDefaultJSON(String filename){
+		
+		String result = "";
+		
+		InputStream file;
+		
+		try {
+			file = context.getResources().getAssets().open(filename);
+			StringBuffer fileContent = new StringBuffer("");
+			byte[] buffer = new byte[1024];
+			
+			while(file.read(buffer) != -1){
+				fileContent.append(new String(buffer));
+			}
+			
+			result = fileContent.toString();
+		} catch (IOException e) {
+			Log.e("getDefaultJSON", e.toString());
+		}
+		
+		
+		return result;
+		
+	}
+	
 	public static Request getRequest(String jsonRequest){
 		
 		Request request;
@@ -288,9 +319,13 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getStations&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
 			setLocalJSON(filenameStations, requestJSON);
 			
-		}else{
+		}else if(fileExists(filenameStations)){
 			
 			requestJSON = getLocalJSON(filenameStations);
+			
+		}else{
+			
+			requestJSON = getDefaultJSON(filenameStations);
 			
 		}
 		
@@ -349,9 +384,13 @@ public static boolean setFavoritesLocalJSON(String filename, String content){
 			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
 			setLocalJSON(filenameTrainLines, requestJSON);
 			
-		}else{
+		}else if(fileExists(filenameTrainLines)){
 			
 			requestJSON = getLocalJSON(filenameTrainLines);
+			
+		}else{
+			
+			requestJSON = getDefaultJSON(filenameTrainLines);
 			
 		}
 		
