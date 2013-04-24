@@ -49,7 +49,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/marginLR"
         android:layout_marginRight="@dimen/marginLR"
-        android:cacheColorHint="@color/bgColor" >
+        android:cacheColorHint="@color/bgColor"
+        android:divider="@color/divider_dark"
+        android:dividerHeight="1dp"
+        android:textColor="@color/white"
+        android:listSelector="@drawable/list_selector" >
 
     </ListView>
 

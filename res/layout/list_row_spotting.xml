@@ -19,22 +19,47 @@
             android:id="@+id/list_image"
             android:layout_width="30dip"
             android:layout_height="30dip"
-            android:src="@drawable/a"/>
+            android:src="@drawable/s_tog"/>
  
     </LinearLayout>
  
-    <!-- Title Of Song-->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Rihanna Love the way lie"
+        android:text="Charlottenlund st."
         android:textColor="@color/white"
         android:typeface="sans"
         android:textSize="15dip"
         android:textStyle="bold"
-        android:layout_marginTop="8dip"/>
+        android:layout_marginTop="2dip"/>
+    
+    <TextView
+        android:id="@+id/artist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Til Hellerup st. - kl. 23:23" />
 
+    <TextView
+        android:id="@+id/spotalert"
+        android:layout_width="25dip"
+        android:layout_height="25dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:paddingRight="1dip"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/round_corners"
+        android:text="100" />
+ 
 </RelativeLayout>

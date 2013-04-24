@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import kea.togkontrolloer.R;
+import kea.togkontrolloer.adapters.TrainLineListAdapter;
 import kea.togkontrolloer.helpers.RequestHelp;
 import kea.togkontrolloer.models.TrainLine;
 import android.os.Bundle;
@@ -115,4 +116,5 @@ public class SpottingOverviewActivity extends Activity {
 				}	
 		}
     };
+    
 }
