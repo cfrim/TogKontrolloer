@@ -54,6 +54,8 @@ public class OverviewDownloadTask extends AsyncTask<Void, Integer, Boolean> {
 			activity.setSpottings(fetchedSpottings);
 		}
 		
+		// TODO run updateList here
+		
 		pDialog.dismiss();
 		
 	}

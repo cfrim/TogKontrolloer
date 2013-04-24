@@ -10,6 +10,8 @@ import kea.togkontrolloer.adapters.TrainLineSpinnerAdapter;
 
 import kea.togkontrolloer.async.OverviewDownloadTask;
 import kea.togkontrolloer.helpers.RequestHelp;
+import kea.togkontrolloer.helpers.SpotHelp;
+import kea.togkontrolloer.models.OverviewListItem;
 import kea.togkontrolloer.models.Spotting;
 
 import kea.togkontrolloer.models.TrainLine;
@@ -30,6 +32,7 @@ public class OverviewActivity extends Activity {
 	private ListView trainlinesOverview; 
 	private ArrayList<TrainLine> trainLines;
 	private ArrayList<Spotting> spottings;
+	private ArrayList<OverviewListItem> listItems;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class OverviewActivity extends Activity {
         if(RequestHelp.fileExists(RequestHelp.getFilenameSpottings())){
         	setSpottings(RequestHelp.getSpottings(false));
         }
+        
+        // TODO Update LIST
         
         // GET DATA
         OverviewDownloadTask overviewDownloadTask = new OverviewDownloadTask(this);
@@ -94,6 +99,26 @@ public class OverviewActivity extends Activity {
 
         });
 	}
+	
+	public void updateList(){
+		
+		ArrayList<OverviewListItem> tempListItems = new ArrayList<OverviewListItem>();
+		
+		int count = trainLines.size();
+		for(int i = 0; i < count; i++){
+			
+			TrainLine tempTrainLine = trainLines.get(i);
+			ArrayList<Spotting> tempSpottings = SpotHelp.spotMatches(tempTrainLine, spottings);
+			
+			tempListItems.add(new OverviewListItem(tempTrainLine, tempSpottings));
+			
+		}
+		
+		listItems = tempListItems;
+		
+		// TODO update spinner adapter here
+		
+	}
 
 	public ArrayList<TrainLine> getTrainLines() {
 		return trainLines;
@@ -101,6 +126,7 @@ public class OverviewActivity extends Activity {
 
 	public void setTrainLines(ArrayList<TrainLine> trainLines) {
 		this.trainLines = trainLines;
+		// TODO Remove this adapter stuff
 		TrainLineListAdapter tAdapter = new TrainLineListAdapter(this, trainLines);
 		trainlinesOverview.setAdapter(tAdapter);
 		

@@ -6,30 +6,43 @@ import kea.togkontrolloer.models.*;
 
 public class SpotHelp {
 
-	public static boolean spotMatches(TrainLine trainLine, Spotting spotting){
-		boolean match = true;
+	public static ArrayList<Spotting> spotMatches(TrainLine trainLine, ArrayList<Spotting> spottings){
 		
-		if(spotting.getLines_id() != 0 && trainLine.getId() != spotting.getLines_id()){
-			match = false;
-		}
+		ArrayList<Spotting> relevantSpottings = new ArrayList<Spotting>();
 		
-		ArrayList<Station> stations = trainLine.getStations();
+		int spotting_count = spottings.size();
 		
-		boolean found = false;
-		
-		int count = stations.size();
-		for(int i = 0; i < count; i++){
+		for(int spotting_i = 0; spotting_i < spotting_count; spotting_i++){
 			
-			if(stations.get(i).getId() == spotting.getFrom_stations_id()){
-				found = true;
-				break;
+			boolean match = true;
+			
+			Spotting spotting = spottings.get(spotting_i);
+			
+			if(spotting.getLines_id() != 0 && trainLine.getId() != spotting.getLines_id()){
+				match = false;
 			}
 			
+			ArrayList<Station> stations = trainLine.getStations();
+			
+			boolean found = false;
+			
+			int count = stations.size();
+			for(int i = 0; i < count; i++){
+				
+				if(stations.get(i).getId() == spotting.getFrom_stations_id()){
+					found = true;
+					break;
+				}
+				
+			}
+			
+			if(!found) match = false;
+			
+			if(match) relevantSpottings.add(spotting);
+		
 		}
 		
-		if(!found) match = false;
-		
-		return match;
+		return relevantSpottings;
 	}
 	
 }
