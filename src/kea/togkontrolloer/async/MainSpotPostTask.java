@@ -39,7 +39,7 @@ public class MainSpotPostTask extends AsyncTask<Void, Integer, Boolean> {
 		if(doPost){
 			if(trainLineId == 0 && toStationId == 0){
 				try{
-					RequestHelp.postSpotting("http://cfrimodt.dk/test/ticket-dodger/?do=setSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12&userId="+this.userId+"&fromStationId="+this.fromStationId);
+					RequestHelp.postSpotting("http://cfrimodt.dk/togkontrolloer/?do=setSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12&userId="+this.userId+"&fromStationId="+this.fromStationId);
 				}
 				catch(Exception e){
 					Log.e("Posting spotting", "Could not post station spotting");
@@ -47,7 +47,7 @@ public class MainSpotPostTask extends AsyncTask<Void, Integer, Boolean> {
 			}
 			else{
 				try{
-					RequestHelp.postSpotting("http://cfrimodt.dk/test/ticket-dodger/?do=setSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12&userId="+this.userId+"&fromStationId="+this.fromStationId+"&toStationId="+this.toStationId+"&lineId="+this.trainLineId);
+					RequestHelp.postSpotting("http://cfrimodt.dk/togkontrolloer/?do=setSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12&userId="+this.userId+"&fromStationId="+this.fromStationId+"&toStationId="+this.toStationId+"&lineId="+this.trainLineId);
 
 				}
 				catch(Exception e){

@@ -316,7 +316,7 @@ public class RequestHelp {
 		
 		if(getOnline){
 			
-			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getStations&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+			requestJSON = getServerJSON("http://cfrimodt.dk/togkontrolloer/?do=getStations&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
 			setLocalJSON(filenameStations, requestJSON);
 			
 		}else if(fileExists(filenameStations)){
@@ -381,7 +381,7 @@ public class RequestHelp {
 		
 		if(getOnline){
 			
-			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+			requestJSON = getServerJSON("http://cfrimodt.dk/togkontrolloer/?do=getLines&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
 			setLocalJSON(filenameTrainLines, requestJSON);
 			
 		}else if(fileExists(filenameTrainLines)){
@@ -539,7 +539,7 @@ public class RequestHelp {
 		}
 		else{
 			if(isConnected()){
-				requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getUser&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+				requestJSON = getServerJSON("http://cfrimodt.dk/togkontrolloer/?do=getUser&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
 				setLocalJSON(filenameUser, requestJSON);
 			}
 		}
@@ -577,7 +577,7 @@ public class RequestHelp {
 		
 		if(getOnline){
 			
-			requestJSON = getServerJSON("http://cfrimodt.dk/test/ticket-dodger/?do=getSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
+			requestJSON = getServerJSON("http://cfrimodt.dk/togkontrolloer/?do=getSpottings&sec=314bf797090f40e9cbf54909b4814a4c1679cf4c2aae390559c15248a0055c12");
 			setLocalJSON(filenameSpottings, requestJSON);
 			
 		}else{
