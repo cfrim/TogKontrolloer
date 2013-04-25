@@ -38,6 +38,8 @@ public class OverviewActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// Getting the passed information from the buttom buttons either true or false depending on press favorites of or overview 
 		Bundle bundle = getIntent().getExtras();
 		showFavorites = bundle.getBoolean("showFavorites");
         // Use custom styling on title bar 
@@ -45,9 +47,11 @@ public class OverviewActivity extends Activity {
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_overview);
         
-        
+        // getting the list view from 
         trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );
         RequestHelp.setContext(this);
+        
+        // If the favorites.json file exists in local phone directory, an arraylist of favorite trainlines should be fetched
         if(RequestHelp.fileExists(RequestHelp.getFilenameFavorites())){
         	favoriteTrainLines = RequestHelp.getFavorites();
         }
@@ -69,7 +73,7 @@ public class OverviewActivity extends Activity {
      // Find the ListView resource.   
         
         
-    
+        // on click on trainlines overview item
         trainlinesOverview.setOnItemClickListener(new OnItemClickListener() {
 
             	public void onItemClick(AdapterView<?> parent, View view,
@@ -78,14 +82,18 @@ public class OverviewActivity extends Activity {
             		  
             		       		   
             		   Log.i("position", String.valueOf(position));
-            		   
+            		   	
+            		   	   // get object from clicked item
             			   OverviewListItem listItem;
             			   listItem = (OverviewListItem) parent.getItemAtPosition(position);
-            			  
+            			   
+            			   // Preparation for new activity start
             			   Intent newActivity = new Intent(view.getContext(), SpottingOverviewActivity.class);
+            			   
+            			   // Pass boolean to detect if the item is clicked from "Favorites"
             			   newActivity.putExtra("showFavorites", showFavorites);
+            			   // Pass line id on the selected train line object 
             		   	   newActivity.putExtra("line_id", listItem.getTrainLine().getId());
-            		   
             		   	   startActivity(newActivity);
 
 
@@ -212,7 +220,7 @@ public class OverviewActivity extends Activity {
 		}
 		
 		
-		
+		// Adapting array list of overviewListItems into ListView
 		listItems = tempListItems;
 		
 		TrainLineListAdapter tAdapter = new TrainLineListAdapter(this, listItems);
