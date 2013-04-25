@@ -43,9 +43,9 @@ public class OverviewActivity extends Activity {
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_overview);
         
-        RequestHelp.setContext(this);
-        trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );
         
+        trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );
+        RequestHelp.setContext(this);
         if(RequestHelp.fileExists(RequestHelp.getFilenameFavorites())){
         	favoriteTrainLines = RequestHelp.getFavorites();
         }
@@ -140,6 +140,23 @@ public class OverviewActivity extends Activity {
         
 	}
 	
+	
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		RequestHelp.setContext(this);
+        if(RequestHelp.fileExists(RequestHelp.getFilenameFavorites())){
+        	favoriteTrainLines = RequestHelp.getFavorites();
+        }
+        
+        updateList();
+		
+	}
+
+
+
 	public void updateList(){
 		
 		ArrayList<OverviewListItem> tempListItems = new ArrayList<OverviewListItem>();
