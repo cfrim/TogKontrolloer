@@ -213,12 +213,12 @@ public class RequestHelp {
 			file.close();
 		} catch (FileNotFoundException e) {
 			success = false;
-			Log.e("setLocalJSON", e.toString());
+			Log.e("setLocalFavoriteJSON", e.toString());
 		} catch (IOException e) {
 			success = false;
-			Log.e("setLocalJSON", e.toString());
+			Log.e("setLocalFavoriteJSON", e.toString());
 		}catch (JsonSyntaxException e) {
-			Log.e("setLocalJSON", e.toString());
+			Log.e("setLocalFavoriteJSON", e.toString());
 		}
 			
 
@@ -452,6 +452,7 @@ public class RequestHelp {
 						alreadyAdded = true;
 					}
 				}
+				
 				if(!alreadyAdded){
 					out.add(newfavorite);
 				}
@@ -462,19 +463,26 @@ public class RequestHelp {
 		}
 		else{
 			if(fileExists(getFilenameFavorites())){
+				
 				int tLineId = id;
-				Favorite newfavorite = new Favorite(id);
+				
 				String requestJSON = RequestHelp.getLocalJSON(getFilenameFavorites());
+				
 				ArrayList<Favorite> list = new ArrayList<Favorite>();
+				
 				JsonArray aExistingFavs;
+				
 				JsonReader reader = new JsonReader(new StringReader(requestJSON));
+				
 				reader.setLenient(true);
+				
 				int positionOfObject = 0;
+				
 				if(requestJSON != ""){
 					aExistingFavs = gson.fromJson(reader, JsonArray.class);
 					for(int i=0; i<aExistingFavs.size(); i++){
 						Favorite oExistingFav = gson.fromJson(aExistingFavs.get(i), Favorite.class);
-						list.add(newfavorite);
+						list.add(oExistingFav);
 						if(oExistingFav.getId() == tLineId){
 							positionOfObject = i;
 						}
