@@ -23,56 +23,61 @@ import android.widget.TextView;
 
 public class MainSpotActivity extends Activity {
 	
+	// FIELDS
+	
 	private ArrayList<Station> stations;
 	private ArrayList<TrainLine> trainLines;
 	public boolean IsInTrain = false;
 	public MainSpotActivity activity;
 	
 
+	// ONCREATE EVENT
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        // Create a class-wide reference to the activity itself.
         activity = this;
         
-        // REQUEST FEATURES
+        // Request the feature to have a custom title
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         
-        // SET CONTENT VIEW
+        // Set the content view
         setContentView(R.layout.activity_main_spot);
         
-        // SET WINDOW TITLE
+        // Set the window title
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
         final TextView tv = (TextView) findViewById(R.id.dynamicTitleView);
         tv.setText("SPOTTING");
         
-        // TrainlineSpinner On item selected
         // Get GUI elements
         final TextView fromStationText = (TextView)findViewById(R.id.fromStationText);
         final Spinner trainLinesSpinner = (Spinner)findViewById(R.id.trainLinesSpinner);
         final Spinner fromStationsSpinner = (Spinner)findViewById(R.id.fromStationsSpinner);
         
+        // Set the context of RequestHelp
         RequestHelp.setContext(this);
         
+        // update the Train lines spinner with local data
         setTrainLines(RequestHelp.getTrainLines(false));
+        
     	TrainLineSpinnerAdapter trainLineAdapter = new TrainLineSpinnerAdapter(this, trainLines);
     	trainLinesSpinner.setAdapter(trainLineAdapter);
         
-
+    	// update the stations spinner with local data
         setStations(RequestHelp.getStations(false));
+        
         StationSpinnerAdapter stationAdapter = new StationSpinnerAdapter(this, stations);
         fromStationsSpinner.setAdapter(stationAdapter);
         
-        // GET DATA
+        // Get data online through a AsyncTask that runs in the background
         MainSpotDownloadTask mainSpotDownloadTask = new MainSpotDownloadTask(this);
         mainSpotDownloadTask.execute();
         
+        // GUI EVENTS
         
-        
-        
-       
-       
-        
+        // onItemSelected trainLineSpinner
         trainLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         	
 			@Override
@@ -99,6 +104,7 @@ public class MainSpotActivity extends Activity {
 						IsInTrain = true;
 						fromStationText.setText("Fra station");
 						
+						// update stations spinner to show only the selected trainline's stations
 						ArrayList<Station> trainLineStationsList = t.getStations();
 						StationSpinnerAdapter stationsSpinnerAdapter = new StationSpinnerAdapter(activity, trainLineStationsList);
 						fromStationsSpinner.setAdapter(stationsSpinnerAdapter);
@@ -113,8 +119,7 @@ public class MainSpotActivity extends Activity {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
+				// TODO why is this here?
 			}
         	
         });
@@ -216,7 +221,7 @@ public class MainSpotActivity extends Activity {
 	// ACTIVITY METHODS
 	public void updateContent(){
 		
-		
+		// TODO this isn't used...
 		
 	}
 

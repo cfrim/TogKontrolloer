@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 public class OverviewActivity extends Activity {
 	
+	// FIELDS
+	
 	private boolean showFavorites;
 	private ListView trainlinesOverview;
 	private ArrayList<Favorite> favoriteTrainLines;
