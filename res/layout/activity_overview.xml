@@ -51,7 +51,6 @@
         android:cacheColorHint="@color/bgColor"
         android:divider="@color/divider_dark"
         android:dividerHeight="1dp"
-        android:listSelector="@drawable/list_selector"
         android:textColor="@color/white" >
 
     </ListView>
