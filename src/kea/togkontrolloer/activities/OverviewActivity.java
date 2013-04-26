@@ -49,31 +49,35 @@ public class OverviewActivity extends Activity {
         
         // getting the list view from 
         trainlinesOverview = (ListView) findViewById( R.id.trainlinesOverview );
+        
+        // Prepare the RequestHelp class, so it can use the activity's context to
+        // check if there is a network connection and other misc. things that need
+        // an activity's context. (IE. checking if files exist).
         RequestHelp.setContext(this);
         
-        // If the favorites.json file exists in local phone directory, an arraylist of favorite trainlines should be fetched
+        // If the "favorites.json" file exists, get the favorites from it.
         if(RequestHelp.fileExists(RequestHelp.getFilenameFavorites())){
         	favoriteTrainLines = RequestHelp.getFavorites();
         }
         
-        Log.i("localget", "inside get trainlines");
+        // Always get trainlines locally, either from a previously downloaded 
+        // "trainlines.json" or the default one included in the apk.
         setTrainLines(RequestHelp.getTrainLines(false));
         
+        // Load saved spottings if they exist.
         if(RequestHelp.fileExists(RequestHelp.getFilenameSpottings())){
-        	Log.i("localget", "inside get spottings");
         	setSpottings(RequestHelp.getSpottings(false));
         }
         
+        // This method takes care of updating and displaying the lists correctly.
         updateList();
         
-        // GET DATA
+        // This is an AsyncTask that takes care of downloading trainlines and
+        // spottings from the network. we have to do it here, since network
+        // access is not allowed in the main activity in newer android versions.
         OverviewDownloadTask overviewDownloadTask = new OverviewDownloadTask(this);
         overviewDownloadTask.execute();
-        
-     // Find the ListView resource.   
-        
-        
-        // on click on trainlines overview item
+
         trainlinesOverview.setOnItemClickListener(new OnItemClickListener() {
 
             	public void onItemClick(AdapterView<?> parent, View view,
